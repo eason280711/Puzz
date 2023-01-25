@@ -7,11 +7,5 @@ project(Puzz
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(SOURCES
-    src/Source.cpp
-)
-
-set(HEADERS
-)
-
-add_executable(Puzz ${SOURCES} ${HEADERS})
+include(puzzlib/puzzlib.cmake)
+include(application/application.cmake)
