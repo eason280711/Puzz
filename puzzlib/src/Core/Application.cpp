@@ -7,7 +7,7 @@ namespace puzz {
 
     void Application::Run()
     {
-        std::cout << "Hello World" << std::endl;
+        std::cout << "Hello Application" << std::endl;
         while(true)
         {
 

@@ -8,9 +8,9 @@ namespace puzz {
         Application();
         ~Application();
 
-        void Run();
-        void Init();
-        void ShotDown();
+        virtual void Run();
+        virtual void Init();
+        virtual void ShotDown();
     };
 
     Application* CreateApplication();
