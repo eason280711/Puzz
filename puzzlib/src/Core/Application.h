@@ -1,6 +1,7 @@
-#pragma once 
+#pragma once
 
-namespace puzz {
+namespace puzz
+{
 
     class __declspec(dllexport) Application
     {
@@ -13,5 +14,5 @@ namespace puzz {
         virtual void ShotDown();
     };
 
-    Application* CreateApplication();
+    Application *CreateApplication();
 }

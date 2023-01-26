@@ -1,32 +1,30 @@
 #include <puzzlib.h>
 #include <iostream>
 
-class myApplication : public puzz::Application {
+class myApplication : public puzz::Application
+{
 public:
-    myApplication() {};
-    ~myApplication() {};
+    myApplication(){};
+    ~myApplication(){};
 
     virtual void Run()
     {
         std::cout << "Hello My Application" << std::endl;
-        while(true)
+        while (true)
         {
-
         }
     };
 
     virtual void Init()
     {
-        
     }
 
     virtual void ShotDown()
     {
-
     }
 };
 
-puzz::Application* puzz::CreateApplication()
+puzz::Application *puzz::CreateApplication()
 {
-    return new myApplication();
+    return new Application();
 }

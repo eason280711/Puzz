@@ -1,11 +1,12 @@
 #pragma once
 
-namespace puzz {
+namespace puzz
+{
 
     class RuntimeModule
     {
     public:
-        virtual ~RuntimeModule() {};
+        virtual ~RuntimeModule(){};
 
         virtual void startUp() = 0;
         virtual void shutDown() = 0;
