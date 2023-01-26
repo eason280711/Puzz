@@ -1,4 +1,4 @@
-# Puzz - C++ Realtime Application library
+# Puzz - C++ Application library
 
 ## Intro
 A library for application development.

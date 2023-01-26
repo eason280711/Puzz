@@ -1,7 +1,6 @@
-#include<bits/stdc++.h>
-using namespace std;
-int main()
+#include <puzzlib.h>
+
+puzz::Application* puzz::CreateApplication()
 {
-    cout << "Hello World!" << endl;
-    return 0;
+    return new puzz::Application();
 }
