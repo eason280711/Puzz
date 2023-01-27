@@ -57,7 +57,8 @@
         "cinttypes": "cpp",
         "complex": "cpp",
         "ratio": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "xtr1common": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

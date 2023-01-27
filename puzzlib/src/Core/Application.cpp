@@ -3,6 +3,8 @@
 #include "Core/Inherit.h"
 #include "Core/Object.h"
 #include "Core/ref_ptr.h"
+#include "State/State.h"
+#include "Event/Event.h"
 #include <iostream>
 
 namespace puzz
@@ -40,6 +42,17 @@ namespace puzz
         int y = 3;
     };
 
+    class ButtonPressEvent : public Inherit<Event, ButtonPressEvent>
+    {
+    public:
+        std::string ToString() { return "ButtonPressEvent"; }
+        bool Handle() {
+            std::cout << "Button Press Event Handle!" << std::endl;
+            return true;
+        }
+        int NextStateCode() { return 2; }
+    };
+
     void Application::Run()
     {
         std::cout << "Hello Application" << std::endl;
@@ -50,6 +63,14 @@ namespace puzz
         {
             ref_ptr<Shape> c = s->Clone();
             if(c) c -> draw();
+        }
+
+        State state;
+        state.setName("WaitingState");
+        state.setTransList(Array<Event*>({new ButtonPressEvent}));
+        for(auto r : state.GetTransList())
+        {
+            std::cout << r->ToString() << std::endl;
         }
 
         while (true)

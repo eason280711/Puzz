@@ -11,6 +11,7 @@ set(HEADERS
     puzzlib/src/Core/Object.h
     puzzlib/src/Containers/Array.h
     puzzlib/src/State/State.h
+    puzzlib/src/Event/Event.h
     puzzlib/puzzlib.h
 )
 
