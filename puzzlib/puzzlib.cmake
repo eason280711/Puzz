@@ -6,7 +6,9 @@ set(HEADERS
     puzzlib/src/Core/Application.h
     puzzlib/src/Core/Core.h
     puzzlib/src/Core/EntryPoint.h
+    puzzlib/src/Core/cnt_ptr.h
     puzzlib/src/Containers/Array.h
+    puzzlib/src/State/State.h
     puzzlib/puzzlib.h
 )
 

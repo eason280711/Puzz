@@ -1,4 +1,5 @@
 #pragma once
+#include "Core/cnt_ptr.h"
 
 namespace puzz
 {
@@ -14,5 +15,5 @@ namespace puzz
         virtual void ShotDown();
     };
 
-    Application *CreateApplication();
+    cnt_ptr<Application> CreateApplication();
 }

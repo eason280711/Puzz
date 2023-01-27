@@ -1,6 +1,7 @@
 #pragma once
+#include "Core/cnt_ptr.h"
 
-extern puzz::Application *puzz::CreateApplication();
+extern puzz::cnt_ptr<puzz::Application> puzz::CreateApplication();
 
 int main(int argc, char **argv)
 {
@@ -8,5 +9,4 @@ int main(int argc, char **argv)
     app->Init();
     app->Run();
     app->ShotDown();
-    delete app;
 }
