@@ -1,7 +1,7 @@
 #pragma once
-#include "Core/cnt_ptr.h"
+#include "Core/ref_ptr.h"
 
-extern puzz::cnt_ptr<puzz::Application> puzz::CreateApplication();
+extern puzz::ref_ptr<puzz::Application> puzz::CreateApplication();
 
 int main(int argc, char **argv)
 {

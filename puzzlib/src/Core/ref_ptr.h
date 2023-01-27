@@ -5,10 +5,10 @@
 namespace puzz
 {
     template <typename T>
-    class __declspec(dllexport) cnt_ptr
+    class __declspec(dllexport) ref_ptr
     {
     public:
-        cnt_ptr(T *ptr = nullptr) : m_ptr(ptr)
+        ref_ptr(T *ptr = nullptr) : m_ptr(ptr)
         {
             if (m_ptr)
             {
@@ -20,7 +20,7 @@ namespace puzz
             }
         }
 
-        cnt_ptr(const cnt_ptr<T> &other) : m_ptr(other.m_ptr)
+        ref_ptr(const ref_ptr<T> &other) : m_ptr(other.m_ptr)
         {
             if (m_ptr)
             {
@@ -33,7 +33,7 @@ namespace puzz
             }
         }
 
-        cnt_ptr<T> &operator=(const cnt_ptr<T> &other)
+        ref_ptr<T> &operator=(const ref_ptr<T> &other)
         {
             if (this != &other)
             {
@@ -55,7 +55,7 @@ namespace puzz
             return *this;
         }
 
-        ~cnt_ptr()
+        ~ref_ptr()
         {
             unref();
         }

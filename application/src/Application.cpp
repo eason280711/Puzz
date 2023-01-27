@@ -24,7 +24,7 @@ public:
     }
 };
 
-puzz::cnt_ptr<puzz::Application> puzz::CreateApplication()
+puzz::ref_ptr<puzz::Application> puzz::CreateApplication()
 {
     return new Application();
 }

@@ -58,5 +58,6 @@
         "complex": "cpp",
         "ratio": "cpp",
         "typeinfo": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

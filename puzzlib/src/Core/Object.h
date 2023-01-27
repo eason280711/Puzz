@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Core/cnt_ptr.h"
+#include "Core/ref_ptr.h"
 
 namespace puzz
 {
 
-    template<class T>
+    template <class T>
     class Object
     {
     public:
-        virtual cnt_ptr<T> Clone() = 0;
+        virtual ref_ptr<T> Clone() = 0;
     };
 
 }

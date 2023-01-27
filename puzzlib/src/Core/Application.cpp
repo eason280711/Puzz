@@ -2,7 +2,7 @@
 #include "Containers/Array.h"
 #include "Core/Inherit.h"
 #include "Core/Object.h"
-#include "Core/cnt_ptr.h"
+#include "Core/ref_ptr.h"
 #include <iostream>
 
 namespace puzz
@@ -43,12 +43,12 @@ namespace puzz
     void Application::Run()
     {
         std::cout << "Hello Application" << std::endl;
-        Array<cnt_ptr<Shape>> arr;
-        arr.push_back(cnt_ptr<Shape>(new Square));
-        arr.push_back(cnt_ptr<Shape>(new Rectangle));
+        Array<ref_ptr<Shape>> arr;
+        arr.push_back(ref_ptr<Shape>(new Square));
+        arr.push_back(ref_ptr<Shape>(new Rectangle));
         for(auto s:arr)
         {
-            cnt_ptr<Shape> c = s->Clone();
+            ref_ptr<Shape> c = s->Clone();
             if(c) c -> draw();
         }
 
