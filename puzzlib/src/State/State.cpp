@@ -3,8 +3,6 @@
 
 namespace puzz
 {
-    ref_ptr<State> StateManager::CurState;
-
     void StateManager::startUp()
     {
     }

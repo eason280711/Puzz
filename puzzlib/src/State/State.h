@@ -28,7 +28,7 @@ namespace puzz
     class StateManager : public Inherit<StateManager,RuntimeModule>
     {
     public:
-        StateManager() : CurState(nullptr) { CurState = ref_ptr<State>(new State()); };
+        StateManager() : CurState(nullptr) {};
         ~StateManager() {};
 
         virtual void startUp() override;
