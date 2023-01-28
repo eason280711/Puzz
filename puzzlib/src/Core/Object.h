@@ -13,7 +13,7 @@ namespace puzz
     //     virtual ref_ptr<T> Clone() = 0;
     // };
 
-    class Object : public Inherit<abstract_method<Object>>
+    class Object : public Inherit<Object>
     {
     };
 

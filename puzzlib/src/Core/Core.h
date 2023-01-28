@@ -1,9 +1,10 @@
 #pragma once
-
+#include "Core/Inherit.h"
+#include "Core/Object.h"
 namespace puzz
 {
 
-    class RuntimeModule
+    class RuntimeModule : public Inherit<abstract_method<RuntimeModule>, Object>
     {
     public:
         virtual ~RuntimeModule(){};

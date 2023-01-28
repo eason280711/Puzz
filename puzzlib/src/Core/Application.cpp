@@ -42,17 +42,6 @@ namespace puzz
         int y = 3;
     };
 
-    class ButtonPressEvent : public Inherit<ButtonPressEvent,Event>
-    {
-    public:
-        std::string ToString() { return "ButtonPressEvent"; }
-        bool Handle() {
-            std::cout << "Button Press Event Handle!" << std::endl;
-            return true;
-        }
-        int NextStateCode() { return 2; }
-    };
-
     void Application::Run()
     {
         std::cout << "Hello Application" << std::endl;
@@ -63,14 +52,6 @@ namespace puzz
         {
             ref_ptr<Shape> c = s->clone();
             if(c) c -> draw();
-        }
-
-        State state;
-        state.setName("WaitingState");
-        state.setTransList(Array<ref_ptr<Event>>({ref_ptr<Event>(new ButtonPressEvent)}));
-        for(auto r : state.GetTransList())
-        {
-            std::cout << r->ToString() << std::endl;
         }
 
         while (true)

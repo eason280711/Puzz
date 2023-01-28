@@ -104,4 +104,4 @@ namespace puzz
         T *m_ptr;
         std::size_t *m_ref_count;
     };
-} // namespace puzz
+}

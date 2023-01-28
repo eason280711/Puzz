@@ -9,19 +9,36 @@
 
 namespace puzz
 {
-    class State : public Inherit<State,Object>
+    class State : public Inherit<abstract_method<State>,Object>
     {
     public:
-        void Init() {};
-        void Transition() {};
+        virtual void Init() {};
+        virtual void Transition() {};
         
-        std::string getName() {return Name;};
-        void setName(std::string name) { Name = name; };
+        virtual std::string getName() {return Name;};
+        virtual void setName(std::string name) { Name = name; };
 
-        Array<ref_ptr<Event>> GetTransList() {return TransList;};
-        void setTransList(Array<ref_ptr<Event>> list) { TransList = list; };
+        virtual Array<ref_ptr<Event>> GetTransList() {return TransList;};
+        virtual void setTransList(Array<ref_ptr<Event>> list) { TransList = list; };
     private:
         std::string Name = "State";
         Array<ref_ptr<Event>> TransList;
+    };
+
+    class StateManager : public Inherit<StateManager,RuntimeModule>
+    {
+    public:
+        StateManager() : CurState(nullptr) { CurState = ref_ptr<State>(new State()); };
+        ~StateManager() {};
+
+        virtual void startUp() override;
+        virtual void shutDown() override;
+        virtual void Tick() override;
+
+        void Update(ref_ptr<State> nextState) { CurState = nextState; };
+
+        inline ref_ptr<State>& GetCurState() { return CurState; }
+    private:
+        ref_ptr<State> CurState;
     };
 }

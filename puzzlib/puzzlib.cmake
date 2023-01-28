@@ -1,5 +1,6 @@
 set(SOURCES
     puzzlib/src/Core/Application.cpp
+    puzzlib/src/State/State.cpp
 )
 
 set(HEADERS
