@@ -4,11 +4,12 @@
 #include "Core/Inherit.h"
 #include "Core/Object.h"
 #include "Event/Event.h"
+#include "Core/ref_ptr.h"
 #include <string>
 
 namespace puzz
 {
-    class State
+    class State : public Inherit<State,Object>
     {
     public:
         void Init() {};
@@ -17,10 +18,10 @@ namespace puzz
         std::string getName() {return Name;};
         void setName(std::string name) { Name = name; };
 
-        Array<Event*> GetTransList() {return TransList;};
-        void setTransList(Array<Event*> list) { TransList = list; };
+        Array<ref_ptr<Event>> GetTransList() {return TransList;};
+        void setTransList(Array<ref_ptr<Event>> list) { TransList = list; };
     private:
         std::string Name = "State";
-        Array<Event*> TransList;
+        Array<ref_ptr<Event>> TransList;
     };
 }

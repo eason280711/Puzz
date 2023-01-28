@@ -12,14 +12,14 @@ namespace puzz
     Application::Application(){};
     Application::~Application(){};
 
-    class Shape : public Object<Shape>
+    class Shape : public Inherit<abstract_method<Shape>>
     {
     public:
         virtual void draw() = 0;
         virtual ~Shape() = default;
     };
 
-    class Square : public Inherit<Shape,Square>
+    class Square : public Inherit<Square,Shape>
     {
     public:
         virtual void draw() override
@@ -30,7 +30,7 @@ namespace puzz
         int x = 1;
     };
 
-    class Rectangle : public Inherit<Shape,Rectangle>
+    class Rectangle : public Inherit<Rectangle,Shape>
     {
     public:
         virtual void draw() override
@@ -42,7 +42,7 @@ namespace puzz
         int y = 3;
     };
 
-    class ButtonPressEvent : public Inherit<Event, ButtonPressEvent>
+    class ButtonPressEvent : public Inherit<ButtonPressEvent,Event>
     {
     public:
         std::string ToString() { return "ButtonPressEvent"; }
@@ -61,13 +61,13 @@ namespace puzz
         arr.push_back(ref_ptr<Shape>(new Rectangle));
         for(auto s:arr)
         {
-            ref_ptr<Shape> c = s->Clone();
+            ref_ptr<Shape> c = s->clone();
             if(c) c -> draw();
         }
 
         State state;
         state.setName("WaitingState");
-        state.setTransList(Array<Event*>({new ButtonPressEvent}));
+        state.setTransList(Array<ref_ptr<Event>>({ref_ptr<Event>(new ButtonPressEvent)}));
         for(auto r : state.GetTransList())
         {
             std::cout << r->ToString() << std::endl;

@@ -5,7 +5,7 @@
 
 namespace puzz
 {
-    class Event : public Object<Event>
+    class Event : public Inherit<abstract_method<Event>,Object>
     {
     public:
         virtual ~Event() {};
