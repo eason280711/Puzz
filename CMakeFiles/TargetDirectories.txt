@@ -1,4 +1,0 @@
-C:/dev/Puzz/CMakeFiles/puzzlib.dir
-C:/dev/Puzz/CMakeFiles/application.dir
-C:/dev/Puzz/CMakeFiles/ALL_BUILD.dir
-C:/dev/Puzz/CMakeFiles/ZERO_CHECK.dir
