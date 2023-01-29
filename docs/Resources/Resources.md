@@ -1,4 +1,7 @@
 # Resources
 
 ## C++
-* [How to Return a Smart Pointer AND Use Covariance](https://www.fluentcpp.com/2017/09/12/how-to-return-a-smart-pointer-and-use-covariance/)
+* [Fluent c++](https://www.fluentcpp.com/)
+
+## 設計模式
+* [Design Patterns](https://refactoring.guru/design-patterns)

@@ -100,32 +100,17 @@ namespace puzz
 
         operator bool() const { return m_ptr != nullptr; }
 
-        // 重载比較運算子，才能使用 std::map<ref_ptr<T>, T>容器
+        // 重載比較運算子，才能使用 TreeMap<ref_ptr<T>, U>容器
         // 但只是用來比較指標，不是用來比較內容
         // 因此只能初步使用，不建議使用
         // 未來會實現比較內容的運算子
 
         bool operator==(const ref_ptr<T> &other) const { return m_ptr == other.m_ptr; }
         bool operator!=(const ref_ptr<T> &other) const { return m_ptr != other.m_ptr; }
-        bool operator<(const ref_ptr<T> &other) const
-        {
-            return m_ptr < other.m_ptr;
-        }
-
-        bool operator>(const ref_ptr<T> &other) const
-        {
-            return m_ptr > other.m_ptr;
-        }
-
-        bool operator<=(const ref_ptr<T> &other) const
-        {
-            return m_ptr <= other.m_ptr;
-        }
-
-        bool operator>=(const ref_ptr<T> &other) const
-        {
-            return m_ptr >= other.m_ptr;
-        }
+        bool operator<(const ref_ptr<T> &other) const { return m_ptr < other.m_ptr; }
+        bool operator>(const ref_ptr<T> &other) const { return m_ptr > other.m_ptr; }
+        bool operator<=(const ref_ptr<T> &other) const { return m_ptr <= other.m_ptr; }
+        bool operator>=(const ref_ptr<T> &other) const { return m_ptr >= other.m_ptr; }
 
     private:
         T *m_ptr;

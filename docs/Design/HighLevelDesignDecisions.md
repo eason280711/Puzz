@@ -8,13 +8,15 @@
 
 **Source code control**:git hosted on github
 
-**Windowing**:以本地原生的Windowing集成在核心中，也能使用第三方函式庫取代。
+**Windowing**:以本地原生的Windowing集成在核心中，也能使用第三方函式庫取代(例如GLFW函式庫)。
 
 **Namespace**:puzz 用於 Puzz庫中所有類別的功能。
 
 **Memory**:(暫無)
 
 **Unification**:(暫無)
+
+**Rendering**:(暫無)
 
 **Design Patterns**:(暫無)
 
