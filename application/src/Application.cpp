@@ -7,7 +7,7 @@ public:
     myApplication(){};
     ~myApplication(){};
 
-    virtual void Run()
+    virtual void Run()/
     {
         std::cout << "Hello My Application" << std::endl;
         while (true)
