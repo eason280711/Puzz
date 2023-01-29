@@ -60,8 +60,8 @@ namespace puzz
             unref();
         }
 
-        T &operator*() { return *m_ptr; }
-        T *operator->() { return m_ptr; }
+        T &operator*() const { return *m_ptr; }
+        T *operator->() const { return m_ptr; }
 
         void ref()
         {
@@ -99,6 +99,28 @@ namespace puzz
         }
 
         operator bool() const { return m_ptr != nullptr; }
+
+        bool operator==(const ref_ptr<T> &other) const { return m_ptr == other.m_ptr; }
+        bool operator!=(const ref_ptr<T> &other) const { return m_ptr != other.m_ptr; }
+        bool operator<(const ref_ptr<T> &other) const
+        {
+            return m_ptr < other.m_ptr;
+        }
+
+        bool operator>(const ref_ptr<T> &other) const
+        {
+            return m_ptr > other.m_ptr;
+        }
+
+        bool operator<=(const ref_ptr<T> &other) const
+        {
+            return m_ptr <= other.m_ptr;
+        }
+
+        bool operator>=(const ref_ptr<T> &other) const
+        {
+            return m_ptr >= other.m_ptr;
+        }
 
     private:
         T *m_ptr;

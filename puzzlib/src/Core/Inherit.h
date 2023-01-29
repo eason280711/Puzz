@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/ref_ptr.h"
+#include <utility>
 namespace puzz
 {
 
@@ -37,6 +38,9 @@ namespace puzz
     class Inherit : public Bases...
     {
     public:
+        template <typename... Args>
+        Inherit(Args &&...args) : Bases(std::forward<Args>(args)...)... {}
+
         virtual ~Inherit() = default;
 
         ref_ptr<Derived> clone() const
@@ -58,6 +62,9 @@ namespace puzz
     class Inherit<abstract_method<Derived>, Bases...> : public Bases...
     {
     public:
+        template <typename... Args>
+        Inherit(Args &&...args) : Bases(std::forward<Args>(args)...)... {}
+
         virtual ~Inherit() = default;
 
         ref_ptr<Derived> clone() const

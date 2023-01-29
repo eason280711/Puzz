@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <cstddef>
+#include <stdexcept>
 
 namespace puzz
 {
@@ -20,6 +21,15 @@ namespace puzz
         void insert(const std::pair<const Key, T> &value) { data_.insert(value); }
         typename TreeMapType::iterator begin() { return data_.begin(); }
         typename TreeMapType::iterator end() { return data_.end(); }
+
+        std::pair<const Key, T>& at(std::size_t index) {
+            if (index >= data_.size()) {
+                throw std::out_of_range("Index out of range");
+            }
+            auto it = data_.begin();
+            std::advance(it, index);
+            return *it;
+        }
 
     private:
         TreeMapType data_;
