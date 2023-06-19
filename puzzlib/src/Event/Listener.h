@@ -12,6 +12,6 @@ namespace puzz
     public:
         Listener() = default;
         virtual ~Listener() {};
-        virtual void onEvent(const Event& event) = 0;
+        virtual void onEvent(ref_ptr<Event> event) = 0;
     };
 }

@@ -25,7 +25,7 @@ namespace puzz
         virtual void onAttach(){};
         virtual void onDetach(){};
         virtual void Tick(){};
-        void onEvent(const Event &event) override {};
+        void onEvent(ref_ptr<Event> event) override {};
         inline const std::string &getName() const { return m_DebugName; }
 
         void pushRuntimeModule(ref_ptr<RuntimeModule> module) { m_Module.push_back(module); };

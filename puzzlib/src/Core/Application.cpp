@@ -8,8 +8,11 @@
 #include "Event/Listener.h"
 #include "Layer/Layer.h"
 #include "Event/Dispatcher.h"
+
 #include "Puzzles/Logging/layer/LoggingLayer.h"
 #include "Puzzles/Keyboard/layer/KeyboardLayer.h"
+#include "Puzzles/Dispatchers/layer/DispatchersLayer.h"
+
 #include <iostream>
 #include <string>
 
@@ -21,6 +24,7 @@ namespace puzz
     void Application::Run()
     {
         PUZZ_CORE_INFO("{0}","WELCOME TO PUZZ APPLICATION");
+
         while (true)
         {
             for(auto& layer : getLayers())
@@ -32,16 +36,12 @@ namespace puzz
 
     void Application::Init()
     {
+        ref_ptr<Layer> dispatchersLayer = CreateDispatchersLayer();
+        PushLayer(dispatchersLayer);
         ref_ptr<Layer> loggingLayer = CreateLoggingLayer();
-        ref_ptr<Layer> keyboardLayer = CreateKeyboardLayer();
-
         PushLayer(loggingLayer);
+        ref_ptr<Layer> keyboardLayer = CreateKeyboardLayer();
         PushLayer(keyboardLayer);
-
-        for(auto& layer : getLayers())
-        {
-            layer->onAttach();
-        }
     }
 
     void Application::ShotDown()

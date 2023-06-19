@@ -4,6 +4,7 @@
 #include "Core/ref_ptr.h"
 #include "Core/Core.h"
 #include "Layer/Layer.h"
+#include "Event/Listener.h"
 #include "Puzzles/Keyboard/component/Keyboard.h"
 #include <string>
 
@@ -41,10 +42,5 @@ namespace puzz
         };
     };
 
-    ref_ptr<Layer> CreateKeyboardLayer()
-    {
-        KeyboardLayer *layer = new KeyboardLayer("KeyboardLayer");
-        
-        return ref_ptr<Layer>(layer);
-    }
+    ref_ptr<Layer> CreateKeyboardLayer();
 }

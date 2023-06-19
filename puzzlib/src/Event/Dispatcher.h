@@ -24,7 +24,7 @@ namespace puzz
             }
         }
 
-        void dispatchEvent(const Event& event) {
+        void dispatchEvent(ref_ptr<Event> event) {
             for (auto it = listeners.begin(); it != listeners.end(); ++it) {
                 (*it)->onEvent(event);
             }
@@ -35,6 +35,6 @@ namespace puzz
         }
         
     private:
-        Array<ref_ptr<Listener>> listeners;  // Using raw pointers for simplicity, consider using smart pointers in real code
+        Array<ref_ptr<Listener>> listeners;
     };
 }
