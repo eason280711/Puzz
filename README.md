@@ -8,9 +8,11 @@
 
 題外話，這個專案的名字是Puzz，原先是指將功能模組化管理(規劃時的想法)的設計。但後來腦袋冒出一句話"It's a C++ Puzz"，Puzzle也有謎題的意思，C++開發對我來說就像解各種謎題，總覺得這名稱真有意境，LUL。
 
+# 進度
+
 根據你的環境，可以使用Visual Studio或是其他IDE來開啟、建置專案。目前我只嘗試過在Windows上使用Visual Studio 2022或是Ninja來建置專案。
 
-建置生成其中有一個檔案 `application.exe` 是應用程式的本體。可以由 `puzzlib/src/Core/Application.cpp` 檔案中的 `main` 函式來看到應用程式的原始碼。
+建置生成其中有一個檔案 `application.exe` 是應用程式的本體。可以由 `puzzlib/src/Core/Application.cpp` [檔案](https://github.com/eason280711/Puzz/blob/main/puzzlib/src/Core/Application.cpp)中的 `main` 函式來看到應用程式的原始碼。
 
 目前的架構是以 `component` 建構 `layer`，我稱其為 `puzzles` 。`application` 則是由 `layer` 堆疊而成。可以參考 `puzzlib/src/Puzzles` 的內容。現在在 `Application.cpp` 初步實現了 `Logging`、`KeyBoard`、`Dispatchers` 的 `puzzles`，在 `Application.cpp` 展示的範例即為，當按下鍵盤時，會將按下的 `KeyBoard` 資訊輸出到 `Console` 中。這過程是經由 `Dispatchers` 傳遞事件給 `Logging`，一個跨 `layer` 的事件傳遞範例。
 
