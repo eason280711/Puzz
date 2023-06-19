@@ -5,14 +5,6 @@
 
 namespace puzz
 {
-
-    // template <class T>
-    // class Object
-    // {
-    // public:
-    //     virtual ref_ptr<T> Clone() = 0;
-    // };
-
     class Object : public Inherit<Object>
     {
     public:

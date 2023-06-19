@@ -58,7 +58,11 @@
         "complex": "cpp",
         "ratio": "cpp",
         "typeinfo": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "xiosbase": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "xstddef": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

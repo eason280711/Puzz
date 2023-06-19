@@ -1,0 +1,3 @@
+[submodule "puzzlib/vendor/spdlog"]
+	path = puzzlib/vendor/spdlog
+	url = https://github.com/gabime/spdlog.git

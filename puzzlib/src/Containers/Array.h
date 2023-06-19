@@ -15,6 +15,19 @@ namespace puzz
         size_t size() const { return data_.size(); }
         void push_back(const T &value) { data_.push_back(value); }
         void push_front(const T &value) { data_.insert(data_.begin(), value); }
+        void pop_back() { data_.pop_back(); }
+        void pop_front() { data_.erase(data_.begin()); }
+        void clear() { data_.clear(); }
+        Container::iterator erase(Container::iterator it) { return data_.erase(it); }
+        Container::iterator erase(Container::iterator first, Container::iterator last) { return data_.erase(first, last); }
+        Container::iterator find(const T &value) { 
+            for (auto it = data_.begin(); it != data_.end(); ++it) {
+                if (*it == value) {
+                    return it;
+                }
+            }
+            return data_.end();
+        }
         typename Container::iterator begin() { return data_.begin(); }
         typename Container::iterator end() { return data_.end(); }
 

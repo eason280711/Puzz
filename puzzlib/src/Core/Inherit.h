@@ -50,7 +50,7 @@ namespace puzz
 
     protected:
     private:
-        virtual Inherit *clone_impl() const override
+        virtual void *clone_impl() const override
         {
             return new Derived(static_cast<const Derived &>(*this));
         }
@@ -74,7 +74,7 @@ namespace puzz
 
     protected:
     private:
-        virtual Inherit *clone_impl() const = 0;
+        virtual void *clone_impl() const = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -91,7 +91,7 @@ namespace puzz
         }
 
     private:
-        virtual Inherit *clone_impl() const
+        virtual void *clone_impl() const
         {
             return new Derived(static_cast<const Derived &>(*this));
         }
@@ -111,7 +111,7 @@ namespace puzz
         }
 
     private:
-        virtual Inherit *clone_impl() const = 0;
+        virtual void *clone_impl() const = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////
