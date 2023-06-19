@@ -9,6 +9,7 @@
 #include "Layer/Layer.h"
 #include "Event/Dispatcher.h"
 #include "Puzzles/Logging/layer/LoggingLayer.h"
+#include "Puzzles/Keyboard/layer/KeyboardLayer.h"
 #include <iostream>
 #include <string>
 
@@ -31,10 +32,11 @@ namespace puzz
 
     void Application::Init()
     {
-        // 初始化Layer
-        ref_ptr<Layer> uiLayer = CreateLoggingLayer();
+        ref_ptr<Layer> loggingLayer = CreateLoggingLayer();
+        ref_ptr<Layer> keyboardLayer = CreateKeyboardLayer();
 
-        PushLayer(uiLayer);
+        PushLayer(loggingLayer);
+        PushLayer(keyboardLayer);
 
         for(auto& layer : getLayers())
         {

@@ -21,6 +21,9 @@ set(HEADERS
     puzzlib/src/Puzzles/Logging/component/Log.h
     puzzlib/src/Puzzles/Logging/component/Log.cpp
     puzzlib/src/Puzzles/Logging/layer/LoggingLayer.h
+    puzzlib/src/Puzzles/Keyboard/component/Keyboard.h
+    puzzlib/src/Puzzles/Keyboard/component/Keyboard.cpp
+    puzzlib/src/Puzzles/Keyboard/layer/KeyboardLayer.h
 )
 
 add_library(puzzlib SHARED ${SOURCES} ${HEADERS})
