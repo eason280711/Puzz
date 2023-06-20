@@ -16,6 +16,9 @@
 
 目前的架構是以 `component` 建構 `layer`，我稱其為 `puzzles` 。`application` 則是由 `layer` 堆疊而成。可以參考 `puzzlib/src/Puzzles` 的內容。現在在 `Application.cpp` 初步實現了 `Logging`、`KeyBoard`、`Dispatchers` 的 `puzzles`，在 `Application.cpp` 展示的範例即為，當按下鍵盤時，會將按下的 `KeyBoard` 資訊輸出到 `Console` 中。這過程是經由 `Dispatchers` 傳遞事件給 `Logging`，一個跨 `layer` 的事件傳遞範例。
 
+像是這樣
+![](./docs/Image/example.png)
+
 # Table of Contents
 
 * [Quick Guide](#Quick-Guide)
