@@ -30,16 +30,27 @@ set(HEADERS
     puzzlib/src/Puzzles/Dispatchers/component/Dispatchers.cpp
     puzzlib/src/Puzzles/Dispatchers/layer/DispatchersLayer.h
     puzzlib/src/Puzzles/Dispatchers/layer/DispatchersLayer.cpp
+    puzzlib/src/Puzzles/Console/component/Console.h
+    puzzlib/src/Puzzles/Console/component/KeyInput.h
+    puzzlib/src/Puzzles/Console/component/Sink.h
+    puzzlib/src/Puzzles/Console/component/Console.cpp
+    puzzlib/src/Puzzles/Console/layer/ConsoleLayer.h
+    puzzlib/src/Puzzles/Console/layer/ConsoleLayer.cpp
 )
 
 add_library(puzzlib SHARED ${SOURCES} ${HEADERS})
 
+find_path(PDC_INCLUDES curses.h)
+find_library(PDC_LIBS pdcurses REQUIRED)
+
 target_link_libraries(puzzlib
+    PRIVATE ${PDC_LIBS}
 )
 
 target_include_directories(puzzlib PRIVATE
     ${CMAKE_SOURCE_DIR}/puzzlib/src
     ${CMAKE_SOURCE_DIR}/puzzlib/vendor/spdlog/include
+    ${PDC_INCLUDES}
 )
 
 target_compile_definitions(puzzlib PRIVATE

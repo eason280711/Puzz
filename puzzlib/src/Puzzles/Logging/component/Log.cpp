@@ -11,7 +11,7 @@ namespace puzz {
 
     void LogManager::startUp()
     {
-        spdlog::set_pattern("%^[%T] %n: %v%$");
+        spdlog::set_pattern("%Y-%m-%d %H:%M:%S.%e %v");
         
         s_CoreLogger = spdlog::stdout_color_mt("PUZZ");
         

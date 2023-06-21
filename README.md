@@ -19,6 +19,8 @@
 像是這樣
 ![](./docs/Image/example.png)
 
+目前需要 pdcurses、spdlog 的 dependency 。
+
 # Table of Contents
 
 * [Quick Guide](#Quick-Guide)

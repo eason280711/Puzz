@@ -6,24 +6,23 @@
 #include "Core/ref_ptr.h"
 #include "Core/Core.h"
 #include "Layer/Layer.h"
-#include "Puzzles/Logging/component/Log.h"
-#include "Puzzles/Dispatchers/component/Dispatchers.h"
-#include "containers/TreeMap.h"
 #include <string>
 #include <iostream>
 
+#include "Puzzles/Console/component/Console.h"
+
 namespace puzz
 {
-    class LoggingLayer : public Inherit<LoggingLayer, Layer>
+    class ConsoleLayer : public Inherit<ConsoleLayer, Layer>
     {
     public:
-        LoggingLayer(std::string name) : Inherit<LoggingLayer, Layer>(name) {};
-        ~LoggingLayer() {}
+        ConsoleLayer(std::string name) : Inherit<ConsoleLayer, Layer>(name) {};
+        ~ConsoleLayer() {}
 
         void onAttach() override
         {
-            ref_ptr<RuntimeModule> log = new LogManager();
-            pushRuntimeModule(log);
+            ref_ptr<RuntimeModule> console = new ConsoleManager();
+            pushRuntimeModule(console);
 
             for (auto& module : getModules())
             {
@@ -46,15 +45,10 @@ namespace puzz
         };
         void onEvent(ref_ptr<Event> event) override
         {
-            if (event->Handle())
-            {
-                int keycode = event->getData<int>();
-                std::string log = "[ KeyPressEvent ] " + std::to_string(keycode) + " is pressed";
-                PUZZ_CORE_TRACE(log);
-            }
+
         };
     private:
     };
 
-    ref_ptr<Layer> CreateLoggingLayer();
+    ref_ptr<Layer> CreateConsoleLayer();
 }

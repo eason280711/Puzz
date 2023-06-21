@@ -12,23 +12,24 @@
 #include "Puzzles/Logging/layer/LoggingLayer.h"
 #include "Puzzles/Keyboard/layer/KeyboardLayer.h"
 #include "Puzzles/Dispatchers/layer/DispatchersLayer.h"
+#include "Puzzles/Console/layer/ConsoleLayer.h"
 
 #include <iostream>
 #include <string>
 
+#include <cstdlib>
+
+#include <curses.h>
+#include <Windows.h>
+
+
 namespace puzz
 {
     Application::Application(){};
-    Application::~Application(){};
+    Application::~Application() {};
 
     void Application::Run()
     {
-        PUZZ_CORE_INFO("{0}","░██╗░░░░░░░██╗███████╗██╗░░░░░░█████╗░░█████╗░███╗░░░███╗███████╗  ████████╗░█████╗░  ██████╗░██╗░░░██╗███████╗███████╗");
-        PUZZ_CORE_INFO("{0}", "░██║░░██╗░░██║██╔════╝██║░░░░░██╔══██╗██╔══██╗████╗░████║██╔════╝  ╚══██╔══╝██╔══██╗  ██╔══██╗██║░░░██║╚════██║╚════██║");
-        PUZZ_CORE_INFO("{0}", "░╚██╗████╗██╔╝█████╗░░██║░░░░░██║░░╚═╝██║░░██║██╔████╔██║█████╗░░  ░░░██║░░░██║░░██║  ██████╔╝██║░░░██║░░███╔═╝░░███╔═╝");
-        PUZZ_CORE_INFO("{0}", "░░████╔═████║░██╔══╝░░██║░░░░░██║░░██╗██║░░██║██║╚██╔╝██║██╔══╝░░  ░░░██║░░░██║░░██║  ██╔═══╝░██║░░░██║██╔══╝░░██╔══╝░░");
-        PUZZ_CORE_INFO("{0}", "░░╚██╔╝░╚██╔╝░███████╗███████╗╚█████╔╝╚█████╔╝██║░╚═╝░██║███████╗  ░░░██║░░░╚█████╔╝  ██║░░░░░╚██████╔╝███████╗███████╗");
-        PUZZ_CORE_INFO("{0}", "░░░╚═╝░░░╚═╝░░╚══════╝╚══════╝░╚════╝░░╚════╝░╚═╝░░░░░╚═╝╚══════╝  ░░░╚═╝░░░░╚════╝░  ╚═╝░░░░░░╚═════╝░╚══════╝╚══════╝");
 
         while (true)
         {
@@ -47,6 +48,8 @@ namespace puzz
         PushLayer(loggingLayer);
         ref_ptr<Layer> keyboardLayer = CreateKeyboardLayer();
         PushLayer(keyboardLayer);
+        ref_ptr<Layer> consoleLayer = CreateConsoleLayer();
+        PushLayer(consoleLayer);
     }
 
     void Application::ShotDown()

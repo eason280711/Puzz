@@ -22,3 +22,5 @@ target_include_directories(application PRIVATE
 
 target_compile_definitions(application PRIVATE
 )
+
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT application)
