@@ -45,8 +45,6 @@ namespace puzz
         T getData() const
         {
             ref_ptr<Data<T>> data = dynamic_pointer_cast<DataHolder,Data<T>>(dataHolder_);
-            if (! data->get())
-                throw std::bad_cast();
             return (*data).get();
         }
 

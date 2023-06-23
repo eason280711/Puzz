@@ -34,6 +34,9 @@ set(HEADERS
     puzzlib/src/Puzzles/Console/component/KeyInput.h
     puzzlib/src/Puzzles/Console/component/Sink.h
     puzzlib/src/Puzzles/Console/component/Console.cpp
+    puzzlib/src/Puzzles/Console/component/Analyzer.h
+    puzzlib/src/Puzzles/Console/component/Ftxui_ex.h
+    puzzlib/src/Puzzles/Console/component/TUI.h
     puzzlib/src/Puzzles/Console/layer/ConsoleLayer.h
     puzzlib/src/Puzzles/Console/layer/ConsoleLayer.cpp
 )
@@ -43,8 +46,11 @@ add_library(puzzlib SHARED ${SOURCES} ${HEADERS})
 find_path(PDC_INCLUDES curses.h)
 find_library(PDC_LIBS pdcurses REQUIRED)
 
+find_package(ftxui CONFIG REQUIRED)
+
 target_link_libraries(puzzlib
-    PRIVATE ${PDC_LIBS}
+    ${PDC_LIBS}
+    ftxui::dom ftxui::screen ftxui::component
 )
 
 target_include_directories(puzzlib PRIVATE

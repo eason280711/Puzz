@@ -30,8 +30,8 @@ namespace puzz {
     {
         auto now = std::chrono::steady_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - m_LastLogTime);
-        if (duration.count() >= 3) {
-            PUZZ_CORE_TRACE("{0}", "System is running normally.");
+        if (duration.count() >= 30) {
+            PUZZ_CORE_TRACE("{0}", "System check for 30 seconds.");
             m_LastLogTime = now;
         }
     }

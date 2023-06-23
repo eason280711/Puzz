@@ -21,6 +21,8 @@ namespace puzz
         void insert(const std::pair<const Key, T> &value) { data_.insert(value); }
         typename TreeMapType::iterator begin() { return data_.begin(); }
         typename TreeMapType::iterator end() { return data_.end(); }
+        // find
+        typename TreeMapType::iterator find(const Key &key) { return data_.find(key); }
 
         std::pair<const Key, T>& at(std::size_t index) {
             if (index >= data_.size()) {

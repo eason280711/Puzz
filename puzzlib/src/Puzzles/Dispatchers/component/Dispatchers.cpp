@@ -11,6 +11,7 @@ namespace puzz {
     void DispatchersManager::startUp()
     {
         s_Dispatchers["KeyBoard"] = new Dispatcher();
+        s_Dispatchers["System"] = new Dispatcher();
     }
 
     void DispatchersManager::shutDown()

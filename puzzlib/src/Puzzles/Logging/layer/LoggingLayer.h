@@ -46,12 +46,13 @@ namespace puzz
         };
         void onEvent(ref_ptr<Event> event) override
         {
-            if (event->Handle())
+            if (event->getName() == "KeyPressEvent")
             {
                 int keycode = event->getData<int>();
                 std::string log = "[ KeyPressEvent ] " + std::to_string(keycode) + " is pressed";
                 PUZZ_CORE_TRACE(log);
             }
+            else event->Handle();
         };
     private:
     };

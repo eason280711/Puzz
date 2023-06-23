@@ -1,4 +1,6 @@
 #include "ConsoleLayer.h"
+#include "Puzzles/Dispatchers/component/Dispatchers.h"
+
 namespace puzz
 {
     ref_ptr<Layer> CreateConsoleLayer()

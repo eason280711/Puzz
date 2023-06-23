@@ -14,12 +14,17 @@
 
 建置生成其中有一個檔案 `application.exe` 是應用程式的本體。可以由 `puzzlib/src/Core/Application.cpp` [檔案](https://github.com/eason280711/Puzz/blob/main/puzzlib/src/Core/Application.cpp)中的 `main` 函式來看到應用程式的原始碼。
 
-目前的架構是以 `component` 建構 `layer`，我稱其為 `puzzles` 。`application` 則是由 `layer` 堆疊而成。可以參考 `puzzlib/src/Puzzles` 的內容。現在在 `Application.cpp` 初步實現了 `Logging`、`KeyBoard`、`Dispatchers` 的 `puzzles`，在 `Application.cpp` 展示的範例即為，當按下鍵盤時，會將按下的 `KeyBoard` 資訊輸出到 `Console` 中。這過程是經由 `Dispatchers` 傳遞事件給 `Logging`，一個跨 `layer` 的事件傳遞範例。
+目前的架構是以 `component` 建構 `layer`，我稱其為 `puzzles` 。`application` 則是由 `layer` 堆疊而成。可以參考 `puzzlib/src/Puzzles` 的內容。現在在 `Application.cpp` 初步實現了 `Logging`、`KeyBoard`、`Dispatchers`、`Console` 的 `puzzles`。
 
-像是這樣
+這是 Application 的範例。當你僅使用 `Logging`、`KeyBoard`、`Dispatchers` 這幾個 Puzzles 時呈現的畫面，將可以看到由 `KeyBoard` 所偵測的按鍵事件，並由 `Logging` 輸出到 Console 中。
+
 ![](./docs/Image/example.png)
 
-目前需要 pdcurses、spdlog 的 dependency 。
+而當你新增 `Console` 這個 Puzzle 時，將可以看到一個簡易的 `Console` ， 其將 `Logging` 重新導向到 `Console` 的畫面中。這個過程是低耦合的，你可以在任何時候新增或移除 `Console` 這個 Puzzle，而不會影響到其他的 Puzzle。
+
+![](./docs/Image/terminal.png)
+
+而 'Console' 也同時實現了 command analyzer 的功能，你可以在 Console 的輸入欄位中輸入 `/help` 來看到所有的指令。
 
 # Table of Contents
 
@@ -40,6 +45,7 @@
 
 # Getting Started
 雖然還沒完成，但如果真的需要的話，可以使用CMake來建置專案。
+目前需要 FIXUI、spdlog 的 dependency ，可以在 vendor 裡的 submodules 看見。
 
 ```bash
 # clone repository

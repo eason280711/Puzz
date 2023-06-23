@@ -19,18 +19,13 @@
 
 #include <cstdlib>
 
-#include <curses.h>
-#include <Windows.h>
-
-
 namespace puzz
 {
     Application::Application(){};
     Application::~Application() {};
 
     void Application::Run()
-    {
-
+    {       
         while (true)
         {
             for(auto& layer : getLayers())
