@@ -26,6 +26,8 @@
 
 而 'Console' 也同時實現了 command analyzer 的功能，你可以在 Console 的輸入欄位中輸入 `/help` 來看到所有的指令。
 
+![](./docs/Image/command.png)
+
 # Table of Contents
 
 * [Quick Guide](#Quick-Guide)
