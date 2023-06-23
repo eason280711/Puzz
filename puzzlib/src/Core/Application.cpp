@@ -22,13 +22,13 @@
 namespace puzz
 {
     Application::Application(){};
-    Application::~Application() {};
+    Application::~Application(){};
 
     void Application::Run()
-    {       
+    {
         while (true)
         {
-            for(auto& layer : getLayers())
+            for (auto &layer : getLayers())
             {
                 layer->Tick();
             }
@@ -49,7 +49,7 @@ namespace puzz
 
     void Application::ShotDown()
     {
-        for(auto& layer : getLayers())
+        for (auto &layer : getLayers())
         {
             layer->onDetach();
         }

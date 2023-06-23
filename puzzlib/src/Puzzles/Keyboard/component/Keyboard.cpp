@@ -7,7 +7,8 @@
 #include <windows.h>
 #include <string>
 
-namespace puzz {
+namespace puzz
+{
 
     class KeyPressEvent : public Inherit<KeyPressEvent, Event>
     {
@@ -19,6 +20,7 @@ namespace puzz {
         {
             return true;
         };
+
     private:
     };
 
@@ -29,7 +31,6 @@ namespace puzz {
 
     void KeyboardManager::shutDown()
     {
-
     }
 
     void KeyboardManager::Tick()

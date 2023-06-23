@@ -16,13 +16,14 @@
 
 #include "TUI.h"
 
-namespace puzz {
+namespace puzz
+{
 
     void ConsoleManager::startUp()
     {
-        //analyser = ref_ptr(new Analyser());
+        // analyser = ref_ptr(new Analyser());
         TUIinit();
-        std::shared_ptr<spdlog::sinks::sink> new_sink = std::make_shared<mSink>(container2,screen_interactive,5000);
+        std::shared_ptr<spdlog::sinks::sink> new_sink = std::make_shared<mSink>(container2, screen_interactive, 5000);
         LogManager::GetCoreLogger()->sinks().clear();
         LogManager::GetCoreLogger()->sinks().push_back(new_sink);
 

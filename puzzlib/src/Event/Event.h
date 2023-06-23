@@ -13,11 +13,11 @@ namespace puzz
         virtual ~DataHolder() {}
     };
 
-    template<typename T>
+    template <typename T>
     class Data : public DataHolder
     {
     public:
-        Data(const T& data) : data(data) {}
+        Data(const T &data) : data(data) {}
         T get() const { return data; }
 
     private:
@@ -41,10 +41,10 @@ namespace puzz
 
         void setDataHolder(ref_ptr<DataHolder> dataHolder) { dataHolder_ = dataHolder; }
 
-        template<typename T>
+        template <typename T>
         T getData() const
         {
-            ref_ptr<Data<T>> data = dynamic_pointer_cast<DataHolder,Data<T>>(dataHolder_);
+            ref_ptr<Data<T>> data = dynamic_pointer_cast<DataHolder, Data<T>>(dataHolder_);
             return (*data).get();
         }
 

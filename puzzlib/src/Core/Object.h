@@ -8,7 +8,7 @@ namespace puzz
     class Object : public Inherit<Object>
     {
     public:
-        Object() {};
+        Object(){};
     };
 
 }

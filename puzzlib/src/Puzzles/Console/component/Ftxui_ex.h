@@ -1,14 +1,17 @@
 #pragma once
 #include "Console.h"
 
-namespace ftxui {
+namespace ftxui
+{
 
-    class ScrollerBase : public ComponentBase {
+    class ScrollerBase : public ComponentBase
+    {
     public:
         ScrollerBase(Component child, int f) : selected_(f) { Add(child); }
 
     private:
-        Element Render() final {
+        Element Render() final
+        {
             auto focused = Focused() ? focus : ftxui::select;
             auto style = Focused() ? bgcolor(Color::GrayLight) : nothing;
 
@@ -22,11 +25,12 @@ namespace ftxui {
                            text(L"") | size(HEIGHT, EQUAL, selected_),
                            text(L"") | style | focused,
                        }),
-                }) |
-                vscroll_indicator | yframe | yflex | reflect(box_);
+                   }) |
+                   vscroll_indicator | yframe | yflex | reflect(box_);
         }
 
-        bool OnEvent(Event event) final {
+        bool OnEvent(Event event) final
+        {
             if (event.is_mouse() && box_.Contain(event.mouse().x, event.mouse().y))
                 TakeFocus();
 
@@ -34,11 +38,13 @@ namespace ftxui {
 
             int selected_old = selected_;
             if (event == Event::ArrowUp || event == Event::Character('k') ||
-                (event.is_mouse() && event.mouse().button == Mouse::WheelUp)) {
+                (event.is_mouse() && event.mouse().button == Mouse::WheelUp))
+            {
                 selected_--;
             }
             if ((event == Event::ArrowDown || event == Event::Character('j') ||
-                (event.is_mouse() && event.mouse().button == Mouse::WheelDown))) {
+                 (event.is_mouse() && event.mouse().button == Mouse::WheelDown)))
+            {
                 selected_++;
             }
             if (event == Event::PageDown)
@@ -62,26 +68,32 @@ namespace ftxui {
         Box box_;
     };
 
-    Component Scroller(Component child, int f) {
+    Component Scroller(Component child, int f)
+    {
         return Make<ScrollerBase>(std::move(child), f);
     }
 
-    class FocusOnClick : public ComponentBase {
+    class FocusOnClick : public ComponentBase
+    {
     public:
-        FocusOnClick(Component component) : component_(component) {
+        FocusOnClick(Component component) : component_(component)
+        {
             Add(component_);
         }
 
     private:
         Component component_;
 
-        Element Render() final {
+        Element Render() final
+        {
             return component_->Render();
         }
 
-        bool OnEvent(Event event) final {
+        bool OnEvent(Event event) final
+        {
             // If the event is a mouse event and the mouse click event, then take focus.
-            if (event.is_mouse() && event.mouse().button == Mouse::Left) {
+            if (event.is_mouse() && event.mouse().button == Mouse::Left)
+            {
                 component_->TakeFocus();
             }
 
@@ -89,14 +101,16 @@ namespace ftxui {
             return component_->OnEvent(event);
         }
 
-        bool Focusable() const final {
+        bool Focusable() const final
+        {
             // This component is focusable only if the underlying component is focusable.
             return component_->Focusable();
         }
     };
 
-    Component MakeFocusOnClick(Component component) {
+    Component MakeFocusOnClick(Component component)
+    {
         return std::make_shared<FocusOnClick>(component);
     }
 
-}  // namespace ftxui
+} // namespace ftxui

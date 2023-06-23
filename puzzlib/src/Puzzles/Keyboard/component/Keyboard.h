@@ -7,12 +7,13 @@
 #include "Core/ref_ptr.h"
 #include <windows.h>
 
-namespace puzz {
+namespace puzz
+{
 
     class KeyboardManager : public Inherit<KeyboardManager, RuntimeModule>
     {
     public:
-        ~KeyboardManager() {};
+        ~KeyboardManager(){};
 
         void startUp() override;
         void shutDown() override;

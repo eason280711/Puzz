@@ -16,7 +16,7 @@ namespace puzz
     class ConsoleLayer : public Inherit<ConsoleLayer, Layer>
     {
     public:
-        ConsoleLayer(std::string name) : Inherit<ConsoleLayer, Layer>(name) {};
+        ConsoleLayer(std::string name) : Inherit<ConsoleLayer, Layer>(name){};
         ~ConsoleLayer() {}
 
         void onAttach() override
@@ -24,29 +24,29 @@ namespace puzz
             ref_ptr<RuntimeModule> console = new ConsoleManager();
             pushRuntimeModule(console);
 
-            for (auto& module : getModules())
+            for (auto &module : getModules())
             {
                 module->startUp();
             }
         };
         void onDetach() override
         {
-            for (auto& module : getModules())
+            for (auto &module : getModules())
             {
                 module->shutDown();
             }
         };
         void Tick() override
         {
-            for(auto& module : getModules())
+            for (auto &module : getModules())
             {
                 module->Tick();
             }
         };
-        void onEvent(ref_ptr<Event> event) override
-        {
+        void onEvent(ref_ptr<Event> event) override{
 
         };
+
     private:
     };
 

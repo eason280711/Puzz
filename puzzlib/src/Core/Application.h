@@ -16,7 +16,8 @@ namespace puzz
         virtual void Init();
         virtual void ShotDown();
 
-        void PushLayer(ref_ptr<Layer> layer) {
+        void PushLayer(ref_ptr<Layer> layer)
+        {
             m_Layers.push_back(layer);
             layer->onAttach();
         };

@@ -17,7 +17,7 @@ namespace puzz
         Layer(const std::string &name = "Layer")
             : m_DebugName(name) {}
 
-        Layer(const std::initializer_list<ref_ptr<RuntimeModule>>& modules, const std::string& name = "Layer")
+        Layer(const std::initializer_list<ref_ptr<RuntimeModule>> &modules, const std::string &name = "Layer")
             : m_DebugName(name), m_Module(modules) {}
 
         ~Layer() {}
@@ -25,7 +25,7 @@ namespace puzz
         virtual void onAttach(){};
         virtual void onDetach(){};
         virtual void Tick(){};
-        void onEvent(ref_ptr<Event> event) override {};
+        void onEvent(ref_ptr<Event> event) override{};
         inline const std::string &getName() const { return m_DebugName; }
 
         void pushRuntimeModule(ref_ptr<RuntimeModule> module) { m_Module.push_back(module); };

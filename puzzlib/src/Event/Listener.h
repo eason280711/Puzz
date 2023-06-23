@@ -7,11 +7,11 @@
 
 namespace puzz
 {
-    class Listener : public Inherit<abstract_method<Listener>, Object> 
+    class Listener : public Inherit<abstract_method<Listener>, Object>
     {
     public:
         Listener() = default;
-        virtual ~Listener() {};
+        virtual ~Listener(){};
         virtual void onEvent(ref_ptr<Event> event) = 0;
     };
 }

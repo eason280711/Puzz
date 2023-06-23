@@ -13,7 +13,7 @@ namespace puzz
     class KeyboardLayer : public Inherit<KeyboardLayer, Layer>
     {
     public:
-        KeyboardLayer(std::string name) : Inherit<KeyboardLayer, Layer>(name) {};
+        KeyboardLayer(std::string name) : Inherit<KeyboardLayer, Layer>(name){};
         ~KeyboardLayer() {}
 
         void onAttach() override
@@ -21,21 +21,21 @@ namespace puzz
             ref_ptr<RuntimeModule> keyboard = new KeyboardManager();
             pushRuntimeModule(keyboard);
 
-            for (auto& module : getModules())
+            for (auto &module : getModules())
             {
                 module->startUp();
             }
         };
         void onDetach() override
         {
-            for (auto& module : getModules())
+            for (auto &module : getModules())
             {
                 module->shutDown();
             }
         };
         void Tick() override
         {
-            for(auto& module : getModules())
+            for (auto &module : getModules())
             {
                 module->Tick();
             }

@@ -8,19 +8,20 @@
 #include "spdlog/fmt/ostr.h"
 #include <chrono>
 
-namespace puzz {
+namespace puzz
+{
 
-    class LogManager: public Inherit<LogManager, RuntimeModule>
+    class LogManager : public Inherit<LogManager, RuntimeModule>
     {
     public:
-        ~LogManager() {};
+        ~LogManager(){};
 
         void startUp() override;
         void shutDown() override;
         void Tick();
 
-        static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
-        
+        static std::shared_ptr<spdlog::logger> &GetCoreLogger() { return s_CoreLogger; }
+
     private:
         static std::shared_ptr<spdlog::logger> s_CoreLogger;
         std::chrono::steady_clock::time_point m_LastLogTime;

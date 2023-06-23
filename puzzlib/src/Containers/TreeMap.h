@@ -10,7 +10,6 @@ namespace puzz
     class TreeMap
     {
     public:
-
         // 以TreeMapType代替std::map類型，方便以後修改
         using TreeMapType = std::map<Key, T, Compare, Allocator>;
 
@@ -24,8 +23,10 @@ namespace puzz
         // find
         typename TreeMapType::iterator find(const Key &key) { return data_.find(key); }
 
-        std::pair<const Key, T>& at(std::size_t index) {
-            if (index >= data_.size()) {
+        std::pair<const Key, T> &at(std::size_t index)
+        {
+            if (index >= data_.size())
+            {
                 throw std::out_of_range("Index out of range");
             }
             auto it = data_.begin();

@@ -10,30 +10,36 @@
 
 namespace puzz
 {
-    class Dispatcher : public Inherit<Dispatcher, Object> 
+    class Dispatcher : public Inherit<Dispatcher, Object>
     {
     public:
-        void addListener(ref_ptr<Listener> listener) {
+        void addListener(ref_ptr<Listener> listener)
+        {
             listeners.push_back(listener);
         }
 
-        void removeListener(ref_ptr<Listener> listener) {
+        void removeListener(ref_ptr<Listener> listener)
+        {
             auto it = listeners.find(listener);
-            if (it != listeners.end()) {
+            if (it != listeners.end())
+            {
                 listeners.erase(it);
             }
         }
 
-        void dispatchEvent(ref_ptr<Event> event) {
-            for (auto it = listeners.begin(); it != listeners.end(); ++it) {
+        void dispatchEvent(ref_ptr<Event> event)
+        {
+            for (auto it = listeners.begin(); it != listeners.end(); ++it)
+            {
                 (*it)->onEvent(event);
             }
         }
 
-        void clear() {
+        void clear()
+        {
             listeners.clear();
         }
-        
+
     private:
         Array<ref_ptr<Listener>> listeners;
     };

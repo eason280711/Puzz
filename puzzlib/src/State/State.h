@@ -24,7 +24,7 @@ namespace puzz
         void setName(std::string name) { Name = name; };
 
         virtual void handleInput() = 0;
-        virtual void update(Event& event) = 0;
+        virtual void update(Event &event) = 0;
         virtual void onEvent(Event &event) = 0;
 
         // TreeMap<ref_ptr<Event>, ref_ptr<State>> getTransList() { return TransList; };

@@ -1,59 +1,74 @@
-namespace puzz{
-    class Command : public Inherit<abstract_method<Command>, Object> {
+namespace puzz
+{
+    class Command : public Inherit<abstract_method<Command>, Object>
+    {
     public:
-        virtual void execute(const std::vector<std::string>& args) = 0;
+        virtual void execute(const std::vector<std::string> &args) = 0;
     };
 
-    class Analyser : public Inherit<Analyser, Object> {
+    class Analyser : public Inherit<Analyser, Object>
+    {
     public:
-        Analyser() {
+        Analyser()
+        {
         }
-        static void registerCommand(const std::string& name, ref_ptr<Command> command) {
+        static void registerCommand(const std::string &name, ref_ptr<Command> command)
+        {
             commands[name] = command;
         }
 
-        static void parseAndExecute(const std::string& input) {
+        static void parseAndExecute(const std::string &input)
+        {
             std::istringstream iss(input);
             std::string commandName;
             iss >> commandName;
 
-            if (commands.find(commandName) == commands.end()) {
+            if (commands.find(commandName) == commands.end())
+            {
                 PUZZ_CORE_ERROR("Unknown command: {}", commandName);
                 return;
             }
 
             std::vector<std::string> args;
             std::string arg;
-            while (iss >> arg) {
+            while (iss >> arg)
+            {
                 args.push_back(arg);
             }
 
             commands[commandName]->execute(args);
         }
 
-        static TreeMap<std::string, ref_ptr<Command>> getCommands() {
+        static TreeMap<std::string, ref_ptr<Command>> getCommands()
+        {
             return commands;
         }
+
     private:
         static TreeMap<std::string, ref_ptr<Command>> commands;
     };
 
     // TODO: command help
-    class HelpCommand : public Inherit<HelpCommand, Command> {
+    class HelpCommand : public Inherit<HelpCommand, Command>
+    {
     public:
-        void execute(const std::vector<std::string>& args) override {
+        void execute(const std::vector<std::string> &args) override
+        {
             auto commands = Analyser::getCommands();
             PUZZ_CORE_INFO("Available commands:");
-            for (auto& [name, command] : commands) {
+            for (auto &[name, command] : commands)
+            {
                 PUZZ_CORE_INFO("  {}", name);
             }
         }
     };
 
     // TODO: command exit
-    class ExitCommand : public Inherit<ExitCommand, Command> {
+    class ExitCommand : public Inherit<ExitCommand, Command>
+    {
     public:
-        void execute(const std::vector<std::string>& args) override {
+        void execute(const std::vector<std::string> &args) override
+        {
             PUZZ_CORE_INFO("Exiting...");
             exit(0);
         }
@@ -61,7 +76,8 @@ namespace puzz{
 
     // TODO: command Dispatch
 
-    class CustomEvent : public Inherit<CustomEvent, Event> {
+    class CustomEvent : public Inherit<CustomEvent, Event>
+    {
     public:
         CustomEvent(const std::string name, const std::string m) : Inherit<CustomEvent, Event>(name), msg(m) {}
         virtual bool Handle() override
@@ -69,13 +85,16 @@ namespace puzz{
             PUZZ_CORE_INFO("[ CustomEvent ] Name: {} , Msg: {}", getName(), msg);
             return true;
         };
+
     private:
         std::string msg;
     };
 
-    class DispatchCommand : public Inherit<DispatchCommand, Command> {
+    class DispatchCommand : public Inherit<DispatchCommand, Command>
+    {
     public:
-        void execute(const std::vector<std::string>& args) override {
+        void execute(const std::vector<std::string> &args) override
+        {
             if (args.size() < 0)
             {
                 PUZZ_CORE_ERROR("DispatchCommand: no event name");
@@ -94,9 +113,11 @@ namespace puzz{
 
     // TODO: command LoggingLevel
 
-    class LoggingLevelCommand : public Inherit<LoggingLevelCommand, Command> {
+    class LoggingLevelCommand : public Inherit<LoggingLevelCommand, Command>
+    {
     public:
-        void execute(const std::vector<std::string>& args) override {
+        void execute(const std::vector<std::string> &args) override
+        {
             /*
             #define PUZZ_CORE_TRACE(...) ::puzz::LogManager::GetCoreLogger()->trace(__VA_ARGS__);
             #define PUZZ_CORE_INFO(...) ::puzz::LogManager::GetCoreLogger()->info(__VA_ARGS__);

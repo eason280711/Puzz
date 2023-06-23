@@ -9,18 +9,19 @@
 #include <windows.h>
 #include <string>
 
-namespace puzz {
+namespace puzz
+{
 
     class DispatchersManager : public Inherit<DispatchersManager, RuntimeModule>
     {
     public:
-        ~DispatchersManager() {};
+        ~DispatchersManager(){};
 
         void startUp() override;
         void shutDown() override;
         void Tick() override;
 
-        static TreeMap<std::string,ref_ptr<Dispatcher>> getDispatchers() { return s_Dispatchers; }
+        static TreeMap<std::string, ref_ptr<Dispatcher>> getDispatchers() { return s_Dispatchers; }
 
     private:
         static TreeMap<std::string, ref_ptr<Dispatcher>> s_Dispatchers;

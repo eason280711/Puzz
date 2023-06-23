@@ -5,7 +5,8 @@
 #include "Containers/TreeMap.h"
 #include <string>
 
-namespace puzz {
+namespace puzz
+{
     TreeMap<std::string, ref_ptr<Dispatcher>> DispatchersManager::s_Dispatchers;
 
     void DispatchersManager::startUp()
@@ -16,11 +17,9 @@ namespace puzz {
 
     void DispatchersManager::shutDown()
     {
-
     }
 
     void DispatchersManager::Tick()
     {
-
     }
 }

@@ -13,7 +13,7 @@ namespace puzz
 
         auto systemDispatcher = DispatchersManager::getDispatchers()["System"];
         systemDispatcher->addListener(listener);
-        
+
         return layer;
     }
 }

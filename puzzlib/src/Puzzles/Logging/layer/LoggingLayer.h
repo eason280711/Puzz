@@ -17,7 +17,7 @@ namespace puzz
     class LoggingLayer : public Inherit<LoggingLayer, Layer>
     {
     public:
-        LoggingLayer(std::string name) : Inherit<LoggingLayer, Layer>(name) {};
+        LoggingLayer(std::string name) : Inherit<LoggingLayer, Layer>(name){};
         ~LoggingLayer() {}
 
         void onAttach() override
@@ -25,21 +25,21 @@ namespace puzz
             ref_ptr<RuntimeModule> log = new LogManager();
             pushRuntimeModule(log);
 
-            for (auto& module : getModules())
+            for (auto &module : getModules())
             {
                 module->startUp();
             }
         };
         void onDetach() override
         {
-            for (auto& module : getModules())
+            for (auto &module : getModules())
             {
                 module->shutDown();
             }
         };
         void Tick() override
         {
-            for(auto& module : getModules())
+            for (auto &module : getModules())
             {
                 module->Tick();
             }
@@ -52,8 +52,10 @@ namespace puzz
                 std::string log = "[ KeyPressEvent ] " + std::to_string(keycode) + " is pressed";
                 PUZZ_CORE_TRACE(log);
             }
-            else event->Handle();
+            else
+                event->Handle();
         };
+
     private:
     };
 

@@ -20,9 +20,12 @@ namespace puzz
         void clear() { data_.clear(); }
         Container::iterator erase(Container::iterator it) { return data_.erase(it); }
         Container::iterator erase(Container::iterator first, Container::iterator last) { return data_.erase(first, last); }
-        Container::iterator find(const T &value) { 
-            for (auto it = data_.begin(); it != data_.end(); ++it) {
-                if (*it == value) {
+        Container::iterator find(const T &value)
+        {
+            for (auto it = data_.begin(); it != data_.end(); ++it)
+            {
+                if (*it == value)
+                {
                     return it;
                 }
             }

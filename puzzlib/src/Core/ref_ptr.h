@@ -71,7 +71,7 @@ namespace puzz
             return *this;
         }
 
-        std::atomic<std::size_t>* get_ref_count() const
+        std::atomic<std::size_t> *get_ref_count() const
         {
             return m_ref_count;
         }
@@ -83,7 +83,7 @@ namespace puzz
 
         T &operator*() const { return *m_ptr; }
         T *operator->() const { return m_ptr; }
-        T* get() const { return m_ptr; }
+        T *get() const { return m_ptr; }
 
         std::size_t use_count() const
         {
@@ -125,20 +125,22 @@ namespace puzz
         std::atomic<std::size_t> *m_ref_count;
     };
 
-    template<typename T, typename U>
-    ref_ptr<U> static_pointer_cast(const ref_ptr<T>& r)
+    template <typename T, typename U>
+    ref_ptr<U> static_pointer_cast(const ref_ptr<T> &r)
     {
-        return ref_ptr<U>(static_cast<U*>(r.get()), r.get_ref_count());
+        return ref_ptr<U>(static_cast<U *>(r.get()), r.get_ref_count());
     }
 
-    template<typename T, typename U>
-    ref_ptr<U> dynamic_pointer_cast(const ref_ptr<T>& r)
+    template <typename T, typename U>
+    ref_ptr<U> dynamic_pointer_cast(const ref_ptr<T> &r)
     {
-        U* ptr = dynamic_cast<U*>(r.get());
-        if (ptr != nullptr) {
+        U *ptr = dynamic_cast<U *>(r.get());
+        if (ptr != nullptr)
+        {
             return ref_ptr<U>(ptr, r.get_ref_count());
         }
-        else {
+        else
+        {
             return ref_ptr<U>();
         }
     }
