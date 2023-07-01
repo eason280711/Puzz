@@ -5,29 +5,27 @@
 #include "Event/Listener.h"
 #include "Containers/Array.h"
 #include "Core/ref_ptr.h"
-#include <string>
-#include <iostream>
 
 namespace puzz
 {
     class Dispatcher : public Inherit<Dispatcher, Object>
     {
     public:
-        void addListener(ref_ptr<Listener> listener)
+        void addListener(const ref_ptr<Listener>& listener)
         {
             listeners.push_back(listener);
         }
 
-        void removeListener(ref_ptr<Listener> listener)
+        void removeListener(const ref_ptr<Listener>& listener)
         {
-            auto it = listeners.find(listener);
+            const auto it = listeners.find(listener);
             if (it != listeners.end())
             {
                 listeners.erase(it);
             }
         }
 
-        void dispatchEvent(ref_ptr<Event> event)
+        void dispatchEvent(const ref_ptr<Event>& event)
         {
             for (auto it = listeners.begin(); it != listeners.end(); ++it)
             {

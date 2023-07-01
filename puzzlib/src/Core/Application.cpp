@@ -1,34 +1,28 @@
 #include "Application.h"
 #include "Containers/Array.h"
-#include "Core/Inherit.h"
-#include "Core/Object.h"
 #include "Core/ref_ptr.h"
-#include "State/State.h"
-#include "Event/Event.h"
-#include "Event/Listener.h"
 #include "Layer/Layer.h"
-#include "Event/Dispatcher.h"
 
 #include "Puzzles/Logging/layer/LoggingLayer.h"
 #include "Puzzles/Keyboard/layer/KeyboardLayer.h"
 #include "Puzzles/Dispatchers/layer/DispatchersLayer.h"
 #include "Puzzles/Console/layer/ConsoleLayer.h"
 
-#include <iostream>
-#include <string>
-
-#include <cstdlib>
-
 namespace puzz
 {
-    Application::Application(){};
-    Application::~Application(){};
+    Application::Application()
+    {
+    };
+
+    Application::~Application()
+    {
+    };
 
     void Application::Run()
     {
         while (true)
         {
-            for (auto &layer : getLayers())
+            for (const auto& layer : getLayers())
             {
                 layer->Tick();
             }
@@ -37,19 +31,19 @@ namespace puzz
 
     void Application::Init()
     {
-        ref_ptr<Layer> dispatchersLayer = CreateDispatchersLayer();
+        const ref_ptr<Layer> dispatchersLayer = CreateDispatchersLayer();
         PushLayer(dispatchersLayer);
-        ref_ptr<Layer> loggingLayer = CreateLoggingLayer();
+        const ref_ptr<Layer> loggingLayer = CreateLoggingLayer();
         PushLayer(loggingLayer);
-        ref_ptr<Layer> keyboardLayer = CreateKeyboardLayer();
+        const ref_ptr<Layer> keyboardLayer = CreateKeyboardLayer();
         PushLayer(keyboardLayer);
-        ref_ptr<Layer> consoleLayer = CreateConsoleLayer();
+        const ref_ptr<Layer> consoleLayer = CreateConsoleLayer();
         PushLayer(consoleLayer);
     }
 
     void Application::ShotDown()
     {
-        for (auto &layer : getLayers())
+        for (const auto& layer : getLayers())
         {
             layer->onDetach();
         }

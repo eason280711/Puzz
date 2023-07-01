@@ -4,10 +4,15 @@
 class myApplication : public puzz::Application
 {
 public:
-    myApplication(){};
-    ~myApplication(){};
+    myApplication()
+    {
+    };
 
-    virtual void Run()
+    ~myApplication()
+    {
+    };
+
+    void Run() override
     {
         std::cout << "Hello My Application" << std::endl;
         while (true)
@@ -15,16 +20,16 @@ public:
         }
     };
 
-    virtual void Init()
+    void Init() override
     {
     }
 
-    virtual void ShotDown()
+    void ShotDown() override
     {
     }
 };
 
 puzz::ref_ptr<puzz::Application> puzz::CreateApplication()
 {
-    return puzz::ref_ptr<puzz::Application>(new Application());
+    return puzz::ref_ptr(new Application());
 }

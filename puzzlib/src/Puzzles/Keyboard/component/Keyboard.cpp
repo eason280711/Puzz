@@ -1,4 +1,3 @@
-// KeyboardManager.cpp
 #pragma once
 #include "Keyboard.h"
 #include "Puzzles/Logging/component/Log.h"
@@ -9,14 +8,18 @@
 
 namespace puzz
 {
-
     class KeyPressEvent : public Inherit<KeyPressEvent, Event>
     {
     public:
-        KeyPressEvent(std::string name) : Inherit<KeyPressEvent, Event>(name) {}
-        ~KeyPressEvent() {}
+        KeyPressEvent(std::string name) : Inherit<KeyPressEvent, Event>(name)
+        {
+        }
 
-        virtual bool Handle() override
+        ~KeyPressEvent() override
+        {
+        }
+
+        bool Handle() override
         {
             return true;
         };
@@ -26,7 +29,7 @@ namespace puzz
 
     void KeyboardManager::startUp()
     {
-        memset(m_keyStates, 0, sizeof(m_keyStates));
+        memset(m_keyStates, 0, sizeof m_keyStates);
     }
 
     void KeyboardManager::shutDown()
@@ -41,11 +44,11 @@ namespace puzz
             {
                 if (!m_keyStates[i])
                 {
-                    ref_ptr<Event> keypressEvent = new KeyPressEvent("KeyPressEvent");
-                    ref_ptr<Data<int>> data = new Data<int>(i);
+                    const ref_ptr<Event> keypressEvent = new KeyPressEvent("KeyPressEvent");
+                    ref_ptr data = new Data(i);
                     keypressEvent->setDataHolder(dynamic_pointer_cast<Data<int>, DataHolder>(data));
 
-                    auto dispatcher = DispatchersManager::getDispatchers()["KeyBoard"];
+                    const auto dispatcher = DispatchersManager::getDispatchers()["KeyBoard"];
 
                     dispatcher->dispatchEvent(keypressEvent);
 
@@ -59,7 +62,7 @@ namespace puzz
         }
     }
 
-    bool KeyboardManager::isKeyPressed(int vkey)
+    bool KeyboardManager::isKeyPressed(const int vkey) const
     {
         return m_keyStates[vkey];
     }

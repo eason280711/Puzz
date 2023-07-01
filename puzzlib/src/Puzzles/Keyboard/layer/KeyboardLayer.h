@@ -1,6 +1,5 @@
 #pragma once
 #include "Core/Inherit.h"
-#include "Core/Object.h"
 #include "Core/ref_ptr.h"
 #include "Core/Core.h"
 #include "Layer/Layer.h"
@@ -13,29 +12,36 @@ namespace puzz
     class KeyboardLayer : public Inherit<KeyboardLayer, Layer>
     {
     public:
-        KeyboardLayer(std::string name) : Inherit<KeyboardLayer, Layer>(name){};
-        ~KeyboardLayer() {}
+        KeyboardLayer(std::string name) : Inherit<KeyboardLayer, Layer>(name)
+        {
+        };
+
+        ~KeyboardLayer() override
+        {
+        }
 
         void onAttach() override
         {
-            ref_ptr<RuntimeModule> keyboard = new KeyboardManager();
+            const ref_ptr<RuntimeModule> keyboard = new KeyboardManager();
             pushRuntimeModule(keyboard);
 
-            for (auto &module : getModules())
+            for (const auto& module : getModules())
             {
                 module->startUp();
             }
         };
+
         void onDetach() override
         {
-            for (auto &module : getModules())
+            for (const auto& module : getModules())
             {
                 module->shutDown();
             }
         };
+
         void Tick() override
         {
-            for (auto &module : getModules())
+            for (const auto& module : getModules())
             {
                 module->Tick();
             }

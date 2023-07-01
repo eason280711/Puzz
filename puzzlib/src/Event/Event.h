@@ -10,14 +10,19 @@ namespace puzz
     class DataHolder
     {
     public:
-        virtual ~DataHolder() {}
+        virtual ~DataHolder()
+        {
+        }
     };
 
     template <typename T>
     class Data : public DataHolder
     {
     public:
-        Data(const T &data) : data(data) {}
+        Data(const T& data) : data(data)
+        {
+        }
+
         T get() const { return data; }
 
     private:
@@ -27,8 +32,13 @@ namespace puzz
     class Event : public Inherit<abstract_method<Event>, Object>
     {
     public:
-        Event(std::string name) : Name(name) {}
-        virtual ~Event() {}
+        Event(const std::string& name) : Name(name)
+        {
+        }
+
+        ~Event() override
+        {
+        }
 
         virtual bool Handle()
         {
@@ -36,10 +46,10 @@ namespace puzz
             return true;
         }
 
-        void setName(std::string name) { Name = name; }
+        void setName(const std::string& name) { Name = name; }
         std::string getName() const { return Name; }
 
-        void setDataHolder(ref_ptr<DataHolder> dataHolder) { dataHolder_ = dataHolder; }
+        void setDataHolder(const ref_ptr<DataHolder>& dataHolder) { dataHolder_ = dataHolder; }
 
         template <typename T>
         T getData() const

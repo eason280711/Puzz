@@ -1,32 +1,32 @@
 #pragma once
 #include "Console.h"
+#include "Puzzles/Dispatchers/layer/DispatchersLayer.h"
 
 namespace ftxui
 {
-
     class ScrollerBase : public ComponentBase
     {
     public:
-        ScrollerBase(Component child, int f) : selected_(f) { Add(child); }
+        ScrollerBase(const Component& child, const int f) : selected_(f) { Add(child); }
 
     private:
         Element Render() final
         {
-            auto focused = Focused() ? focus : ftxui::select;
-            auto style = Focused() ? bgcolor(Color::GrayLight) : nothing;
+            auto focused = Focused() ? focus : select;
+            const auto style = Focused() ? bgcolor(Color::GrayLight) : nothing;
 
             Element background = ComponentBase::Render();
             background->ComputeRequirement();
             size_ = background->requirement().min_y;
             Focused() ? selected_ : selected_ = size_;
             return dbox({
-                       std::move(background),
-                       vbox({
-                           text(L"") | size(HEIGHT, EQUAL, selected_),
-                           text(L"") | style | focused,
-                       }),
-                   }) |
-                   vscroll_indicator | yframe | yflex | reflect(box_);
+                    std::move(background),
+                    vbox({
+                        text(L"") | size(HEIGHT, EQUAL, selected_),
+                        text(L"") | style | focused,
+                    }),
+                }) |
+                vscroll_indicator | yframe | yflex | reflect(box_);
         }
 
         bool OnEvent(Event event) final
@@ -36,14 +36,14 @@ namespace ftxui
 
             Focused();
 
-            int selected_old = selected_;
+            const int selected_old = selected_;
             if (event == Event::ArrowUp || event == Event::Character('k') ||
                 (event.is_mouse() && event.mouse().button == Mouse::WheelUp))
             {
                 selected_--;
             }
-            if ((event == Event::ArrowDown || event == Event::Character('j') ||
-                 (event.is_mouse() && event.mouse().button == Mouse::WheelDown)))
+            if (event == Event::ArrowDown || event == Event::Character('j') ||
+                (event.is_mouse() && event.mouse().button == Mouse::WheelDown))
             {
                 selected_++;
             }
@@ -76,7 +76,7 @@ namespace ftxui
     class FocusOnClick : public ComponentBase
     {
     public:
-        FocusOnClick(Component component) : component_(component)
+        FocusOnClick(const Component& component) : component_(component)
         {
             Add(component_);
         }
@@ -112,5 +112,4 @@ namespace ftxui
     {
         return std::make_shared<FocusOnClick>(component);
     }
-
 } // namespace ftxui

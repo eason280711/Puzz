@@ -1,8 +1,6 @@
 #pragma once
 #include "Core/Inherit.h"
-#include "Core/Object.h"
 #include "Event/Event.h"
-#include "Event/Listener.h"
 #include "Core/ref_ptr.h"
 #include "Core/Core.h"
 #include "Layer/Layer.h"
@@ -15,35 +13,43 @@ namespace puzz
     class DispatchersLayer : public Inherit<DispatchersLayer, Layer>
     {
     public:
-        DispatchersLayer(std::string name) : Inherit<DispatchersLayer, Layer>(name){};
-        ~DispatchersLayer() {}
+        DispatchersLayer(std::string name) : Inherit<DispatchersLayer, Layer>(name)
+        {
+        };
+
+        ~DispatchersLayer() override
+        {
+        }
 
         void onAttach() override
         {
-            ref_ptr<RuntimeModule> dispatchers = new DispatchersManager();
+            const ref_ptr<RuntimeModule> dispatchers = new DispatchersManager();
             pushRuntimeModule(dispatchers);
 
-            for (auto &module : getModules())
+            for (const auto& module : getModules())
             {
                 module->startUp();
             }
         };
+
         void onDetach() override
         {
-            for (auto &module : getModules())
+            for (const auto& module : getModules())
             {
                 module->shutDown();
             }
         };
+
         void Tick() override
         {
-            for (auto &module : getModules())
+            for (const auto& module : getModules())
             {
                 module->Tick();
             }
         };
-        void onEvent(ref_ptr<Event> event) override{
 
+        void onEvent(ref_ptr<Event> event) override
+        {
         };
 
     private:

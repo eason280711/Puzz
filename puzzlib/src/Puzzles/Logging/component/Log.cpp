@@ -1,8 +1,4 @@
 #include "Log.h"
-#include "Core/Core.h"
-#include "Core/Inherit.h"
-#include "Core/Object.h"
-#include "Core/ref_ptr.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 namespace puzz
@@ -28,8 +24,8 @@ namespace puzz
 
     void LogManager::Tick()
     {
-        auto now = std::chrono::steady_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - m_LastLogTime);
+        const auto now = std::chrono::steady_clock::now();
+        const auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - m_LastLogTime);
         if (duration.count() >= 30)
         {
             PUZZ_CORE_TRACE("{0}", "System check for 30 seconds.");

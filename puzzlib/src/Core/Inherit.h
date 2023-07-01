@@ -2,9 +2,9 @@
 
 #include "Core/ref_ptr.h"
 #include <utility>
+
 namespace puzz
 {
-
     // template <class ParentClass, class SubClass>
     // class Inherit : public ParentClass
     // {
@@ -39,20 +39,22 @@ namespace puzz
     {
     public:
         template <typename... Args>
-        Inherit(Args &&...args) : Bases(std::forward<Args>(args)...)... {}
+        Inherit(Args&&... args) : Bases(std::forward<Args>(args)...)...
+        {
+        }
 
         virtual ~Inherit() = default;
 
         ref_ptr<Derived> clone() const
         {
-            return ref_ptr<Derived>(static_cast<Derived *>(this->clone_impl()));
+            return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
         }
 
     protected:
     private:
-        virtual void *clone_impl() const override
+        virtual void* clone_impl() const override
         {
-            return new Derived(static_cast<const Derived &>(*this));
+            return new Derived(static_cast<const Derived&>(*this));
         }
     };
 
@@ -63,18 +65,20 @@ namespace puzz
     {
     public:
         template <typename... Args>
-        Inherit(Args &&...args) : Bases(std::forward<Args>(args)...)... {}
+        Inherit(Args&&... args) : Bases(std::forward<Args>(args)...)...
+        {
+        }
 
         virtual ~Inherit() = default;
 
         ref_ptr<Derived> clone() const
         {
-            return ref_ptr<Derived>(static_cast<Derived *>(this->clone_impl()));
+            return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
         }
 
     protected:
     private:
-        virtual void *clone_impl() const = 0;
+        virtual void* clone_impl() const = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -87,13 +91,13 @@ namespace puzz
 
         ref_ptr<Derived> clone() const
         {
-            return ref_ptr<Derived>(static_cast<Derived *>(this->clone_impl()));
+            return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
         }
 
     private:
-        virtual void *clone_impl() const
+        virtual void* clone_impl() const
         {
-            return new Derived(static_cast<const Derived &>(*this));
+            return new Derived(static_cast<const Derived&>(*this));
         }
     };
 
@@ -107,13 +111,12 @@ namespace puzz
 
         ref_ptr<Derived> clone() const
         {
-            return ref_ptr<Derived>(static_cast<Derived *>(this->clone_impl()));
+            return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
         }
 
     private:
-        virtual void *clone_impl() const = 0;
+        virtual void* clone_impl() const = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////
-
 }

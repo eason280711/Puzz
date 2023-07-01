@@ -14,23 +14,40 @@ namespace puzz
     class Layer : public Inherit<Layer, Object, Listener>
     {
     public:
-        Layer(const std::string &name = "Layer")
-            : m_DebugName(name) {}
+        Layer(const std::string& name = "Layer")
+            : m_DebugName(name)
+        {
+        }
 
-        Layer(const std::initializer_list<ref_ptr<RuntimeModule>> &modules, const std::string &name = "Layer")
-            : m_DebugName(name), m_Module(modules) {}
+        Layer(const std::initializer_list<ref_ptr<RuntimeModule>>& modules, const std::string& name = "Layer")
+            : m_DebugName(name), m_Module(modules)
+        {
+        }
 
-        ~Layer() {}
+        ~Layer() override
+        {
+        }
 
-        virtual void onAttach(){};
-        virtual void onDetach(){};
-        virtual void Tick(){};
-        void onEvent(ref_ptr<Event> event) override{};
-        inline const std::string &getName() const { return m_DebugName; }
+        virtual void onAttach()
+        {
+        };
 
-        void pushRuntimeModule(ref_ptr<RuntimeModule> module) { m_Module.push_back(module); };
+        virtual void onDetach()
+        {
+        };
 
-        inline Array<ref_ptr<RuntimeModule>> &getModules() { return m_Module; }
+        virtual void Tick()
+        {
+        };
+
+        void onEvent(ref_ptr<Event> event) override
+        {
+        };
+        const std::string& getName() const { return m_DebugName; }
+
+        void pushRuntimeModule(const ref_ptr<RuntimeModule>& module) { m_Module.push_back(module); };
+
+        Array<ref_ptr<RuntimeModule>>& getModules() { return m_Module; }
 
     private:
         std::string m_DebugName;

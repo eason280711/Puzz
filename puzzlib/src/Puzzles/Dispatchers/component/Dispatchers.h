@@ -2,20 +2,19 @@
 
 #include "Core/Core.h"
 #include "Core/Inherit.h"
-#include "Core/Object.h"
 #include "Core/ref_ptr.h"
 #include "Containers/TreeMap.h"
 #include "Event/Dispatcher.h"
-#include <windows.h>
 #include <string>
 
 namespace puzz
 {
-
     class DispatchersManager : public Inherit<DispatchersManager, RuntimeModule>
     {
     public:
-        ~DispatchersManager(){};
+        ~DispatchersManager() override
+        {
+        };
 
         void startUp() override;
         void shutDown() override;

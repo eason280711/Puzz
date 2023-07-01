@@ -1,7 +1,5 @@
 #pragma once
 #include "Core/Core.h"
-#include "Containers/Array.h"
-#include "Containers/TreeMap.h"
 #include "Core/Inherit.h"
 #include "Core/Object.h"
 #include "Event/Event.h"
@@ -14,18 +12,21 @@ namespace puzz
     class State : public Inherit<abstract_method<State>, Object, abstract_method<Listener>>
     {
     public:
-        State(std::string name)
+        State(const std::string& name)
         {
             Name = name;
         };
-        ~State(){};
+
+        ~State() override
+        {
+        };
 
         std::string getName() { return Name; };
-        void setName(std::string name) { Name = name; };
+        void setName(const std::string& name) { Name = name; };
 
         virtual void handleInput() = 0;
-        virtual void update(Event &event) = 0;
-        virtual void onEvent(Event &event) = 0;
+        virtual void update(Event& event) = 0;
+        virtual void onEvent(Event& event) = 0;
 
         // TreeMap<ref_ptr<Event>, ref_ptr<State>> getTransList() { return TransList; };
         // void setTransList(TreeMap<ref_ptr<Event>, ref_ptr<State>> transList) { TransList = transList; };
@@ -38,15 +39,17 @@ namespace puzz
     class StateManager : public Inherit<StateManager, RuntimeModule>
     {
     public:
-        ~StateManager(){};
+        ~StateManager() override
+        {
+        };
 
-        virtual void startUp() override;
-        virtual void shutDown() override;
-        virtual void Tick() override;
+        void startUp() override;
+        void shutDown() override;
+        void Tick() override;
 
-        void Update(ref_ptr<State> nextState) { CurState = nextState; };
+        void Update(const ref_ptr<State>& nextState) { CurState = nextState; };
 
-        inline ref_ptr<State> &getCurState() { return CurState; }
+        ref_ptr<State>& getCurState() { return CurState; }
 
     private:
         ref_ptr<State> CurState;

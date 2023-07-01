@@ -1,6 +1,4 @@
 #include "State.h"
-#include "Core/ref_ptr.h"
-#include <iostream>
 
 namespace puzz
 {

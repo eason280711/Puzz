@@ -2,8 +2,6 @@
 #include "Core/Inherit.h"
 #include "Core/Object.h"
 #include "Event/Event.h"
-#include <string>
-#include <iostream>
 
 namespace puzz
 {
@@ -11,7 +9,10 @@ namespace puzz
     {
     public:
         Listener() = default;
-        virtual ~Listener(){};
+
+        ~Listener() override
+        {
+        };
         virtual void onEvent(ref_ptr<Event> event) = 0;
     };
 }

@@ -3,7 +3,7 @@ namespace puzz
     class Command : public Inherit<abstract_method<Command>, Object>
     {
     public:
-        virtual void execute(const std::vector<std::string> &args) = 0;
+        virtual void execute(const std::vector<std::string>& args) = 0;
     };
 
     class Analyser : public Inherit<Analyser, Object>
@@ -12,12 +12,13 @@ namespace puzz
         Analyser()
         {
         }
-        static void registerCommand(const std::string &name, ref_ptr<Command> command)
+
+        static void registerCommand(const std::string& name, const ref_ptr<Command>& command)
         {
             commands[name] = command;
         }
 
-        static void parseAndExecute(const std::string &input)
+        static void parseAndExecute(const std::string& input)
         {
             std::istringstream iss(input);
             std::string commandName;
@@ -52,11 +53,11 @@ namespace puzz
     class HelpCommand : public Inherit<HelpCommand, Command>
     {
     public:
-        void execute(const std::vector<std::string> &args) override
+        void execute(const std::vector<std::string>& args) override
         {
             auto commands = Analyser::getCommands();
             PUZZ_CORE_INFO("Available commands:");
-            for (auto &[name, command] : commands)
+            for (auto& [name, command] : commands)
             {
                 PUZZ_CORE_INFO("  {}", name);
             }
@@ -67,7 +68,7 @@ namespace puzz
     class ExitCommand : public Inherit<ExitCommand, Command>
     {
     public:
-        void execute(const std::vector<std::string> &args) override
+        void execute(const std::vector<std::string>& args) override
         {
             PUZZ_CORE_INFO("Exiting...");
             exit(0);
@@ -79,7 +80,10 @@ namespace puzz
     class CustomEvent : public Inherit<CustomEvent, Event>
     {
     public:
-        CustomEvent(const std::string name, const std::string m) : Inherit<CustomEvent, Event>(name), msg(m) {}
+        CustomEvent(const std::string& name, const std::string& m) : Inherit<CustomEvent, Event>(name), msg(m)
+        {
+        }
+
         virtual bool Handle() override
         {
             PUZZ_CORE_INFO("[ CustomEvent ] Name: {} , Msg: {}", getName(), msg);
@@ -93,13 +97,8 @@ namespace puzz
     class DispatchCommand : public Inherit<DispatchCommand, Command>
     {
     public:
-        void execute(const std::vector<std::string> &args) override
+        void execute(const std::vector<std::string>& args) override
         {
-            if (args.size() < 0)
-            {
-                PUZZ_CORE_ERROR("DispatchCommand: no event name");
-                return;
-            }
             if (args.size() < 1)
             {
                 PUZZ_CORE_ERROR("DispatchCommand: no event message");
@@ -116,7 +115,7 @@ namespace puzz
     class LoggingLevelCommand : public Inherit<LoggingLevelCommand, Command>
     {
     public:
-        void execute(const std::vector<std::string> &args) override
+        void execute(const std::vector<std::string>& args) override
         {
             /*
             #define PUZZ_CORE_TRACE(...) ::puzz::LogManager::GetCoreLogger()->trace(__VA_ARGS__);
