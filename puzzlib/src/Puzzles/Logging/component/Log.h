@@ -18,10 +18,10 @@ namespace puzz
         void shutDown() override;
         void Tick() override;
 
-        static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
+        __declspec(dllexport) static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
 
     private:
-        static std::shared_ptr<spdlog::logger> s_CoreLogger;
+        __declspec(dllexport) static std::shared_ptr<spdlog::logger> s_CoreLogger;
         std::chrono::steady_clock::time_point m_LastLogTime;
     };
 

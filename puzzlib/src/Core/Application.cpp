@@ -3,10 +3,13 @@
 #include "Core/ref_ptr.h"
 #include "Layer/Layer.h"
 
+#include "Config/Config.h"
+
 #include "Puzzles/Logging/layer/LoggingLayer.h"
 #include "Puzzles/Keyboard/layer/KeyboardLayer.h"
 #include "Puzzles/Dispatchers/layer/DispatchersLayer.h"
 #include "Puzzles/Console/layer/ConsoleLayer.h"
+#include "Puzzles/Plugin/layer/DllLayer.h"
 
 namespace puzz
 {
@@ -20,6 +23,7 @@ namespace puzz
 
     void Application::Run()
     {
+        std::cout << "test" << std::endl;
         while (true)
         {
             for (const auto& layer : getLayers())
@@ -39,6 +43,8 @@ namespace puzz
         PushLayer(keyboardLayer);
         const ref_ptr<Layer> consoleLayer = CreateConsoleLayer();
         PushLayer(consoleLayer);
+        const ref_ptr<Layer> pluginLayer = CreateDynamicLibraryLayer("DLL","editor.dll");
+        PushLayer(pluginLayer);
     }
 
     void Application::ShotDown()

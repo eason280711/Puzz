@@ -28,7 +28,7 @@ namespace puzz
         const auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - m_LastLogTime);
         if (duration.count() >= 30)
         {
-            PUZZ_CORE_TRACE("{0}", "System check for 30 seconds.");
+            PUZZ_CORE_TRACE("{0}", "System 30 seconds routine check");
             m_LastLogTime = now;
         }
     }
