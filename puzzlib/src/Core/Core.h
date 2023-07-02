@@ -4,7 +4,7 @@
 
 namespace puzz
 {
-    class RuntimeModule : public Inherit<abstract_method<RuntimeModule>, Object>
+    class PUZZ_API RuntimeModule : public Inherit<abstract_method<RuntimeModule>, Object>
     {
     public:
         ~RuntimeModule() override

@@ -56,6 +56,8 @@ namespace puzz
         Analyser::registerCommand("/exit", ref_ptr<Command>(new ExitCommand()));
         Analyser::registerCommand("/dispatch", ref_ptr<Command>(new DispatchCommand()));
         Analyser::registerCommand("/setlevel", ref_ptr<Command>(new LoggingLevelCommand()));
+        Analyser::registerCommand("/reload", ref_ptr<Command>(new ReloadCommand()));
+
         // The input box.
         auto input_option = ftxui::InputOption();
         std::string input_add_content = "";

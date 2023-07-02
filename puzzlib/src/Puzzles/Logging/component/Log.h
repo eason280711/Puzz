@@ -7,7 +7,7 @@
 
 namespace puzz
 {
-    class LogManager : public Inherit<LogManager, RuntimeModule>
+    class PUZZ_API LogManager : public Inherit<LogManager, RuntimeModule>
     {
     public:
         ~LogManager() override
@@ -18,10 +18,10 @@ namespace puzz
         void shutDown() override;
         void Tick() override;
 
-        __declspec(dllexport) static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
+        static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
 
     private:
-        __declspec(dllexport) static std::shared_ptr<spdlog::logger> s_CoreLogger;
+        static std::shared_ptr<spdlog::logger> s_CoreLogger;
         std::chrono::steady_clock::time_point m_LastLogTime;
     };
 

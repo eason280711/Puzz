@@ -5,7 +5,7 @@
 namespace puzz
 {
     template <typename T, typename Container = std::vector<T>>
-    class Array
+    class PUZZ_API Array
     {
     public:
         Array()

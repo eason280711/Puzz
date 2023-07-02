@@ -7,7 +7,7 @@ namespace puzz
 {
     template <typename Key, typename T, typename Compare = std::less<Key>, typename Allocator = std::allocator<std::pair
                   <const Key, T>>>
-    class TreeMap
+    class PUZZ_API TreeMap
     {
     public:
         // 以TreeMapType代替std::map類型，方便以後修改

@@ -9,7 +9,7 @@
 
 namespace puzz
 {
-    class State : public Inherit<abstract_method<State>, Object, abstract_method<Listener>>
+    class PUZZ_API State : public Inherit<abstract_method<State>, Object, abstract_method<Listener>>
     {
     public:
         State(const std::string& name)

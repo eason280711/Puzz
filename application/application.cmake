@@ -21,6 +21,7 @@ target_include_directories(application PRIVATE
 )
 
 target_compile_definitions(application PRIVATE
+    PUZZ_PLATFORM_WINDOWS
 )
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT application)

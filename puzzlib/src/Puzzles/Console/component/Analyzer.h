@@ -110,6 +110,33 @@ namespace puzz
         }
     };
 
+    // TODO: command Reroad Plugin
+
+    class ReloadEvent : public Inherit<ReloadEvent, Event>
+    {
+    public:
+        ReloadEvent() : Inherit<ReloadEvent, Event>("ReloadEvent")
+        {
+        }
+
+        virtual bool Handle() override
+        {
+            PUZZ_CORE_INFO("[ ReloadEvent ]");
+            return true;
+        };
+    };
+
+    class ReloadCommand : public Inherit<ReloadCommand, Command>
+    {
+    public:
+        void execute(const std::vector<std::string>& args) override
+        {
+            ref_ptr<Event> reloadEvent = new ReloadEvent();
+            auto dispatcher = DispatchersManager::getDispatchers()["System"];
+            dispatcher->dispatchEvent(reloadEvent);
+        }
+    };
+
     // TODO: command LoggingLevel
 
     class LoggingLevelCommand : public Inherit<LoggingLevelCommand, Command>

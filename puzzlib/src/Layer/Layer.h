@@ -11,7 +11,7 @@
 
 namespace puzz
 {
-    class Layer : public Inherit<Layer, Object, Listener>
+    class PUZZ_API Layer : public Inherit<Layer, Object, Listener>
     {
     public:
         Layer(const std::string& name = "Layer")

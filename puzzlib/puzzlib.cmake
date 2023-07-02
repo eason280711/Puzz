@@ -20,4 +20,6 @@ target_include_directories(puzzlib PRIVATE
 )
 
 target_compile_definitions(puzzlib PRIVATE
+    PUZZ_PLATFORM_WINDOWS
+    PUZZ_BUILD_DLL
 )

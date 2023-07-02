@@ -25,10 +25,8 @@ namespace puzz
 
             auto SetLogger = getFunction<void(*)(std::shared_ptr<spdlog::logger>)>("SetLogger");
 
-            // Check if the function address is valid.
             if (SetLogger != nullptr)
             {
-                // Call the function.
                 SetLogger(::puzz::LogManager::GetCoreLogger());
             }
         }

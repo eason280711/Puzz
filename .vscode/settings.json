@@ -93,7 +93,8 @@
         "xstring": "cpp",
         "xtree": "cpp",
         "xutility": "cpp",
-        "csignal": "cpp"
+        "csignal": "cpp",
+        "future": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "cmake.configureSettings": {

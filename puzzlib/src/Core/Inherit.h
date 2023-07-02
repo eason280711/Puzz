@@ -3,6 +3,23 @@
 #include "Core/ref_ptr.h"
 #include <utility>
 
+#ifdef PUZZ_PLATFORM_WINDOWS
+#ifdef PUZZ_BUILD_DLL
+#define PUZZ_API __declspec(dllexport)
+#else
+#define PUZZ_API __declspec(dllimport)
+#endif
+
+#ifdef USER_BUILD_DLL
+#define USER_API __declspec(dllexport)
+#else
+#define USER_API __declspec(dllimport)
+#endif
+
+#else
+#error PUZZ only support Windows!
+#endif
+
 namespace puzz
 {
     // template <class ParentClass, class SubClass>
@@ -20,14 +37,14 @@ namespace puzz
     ///////////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    class abstract_method
+    class PUZZ_API abstract_method
     {
     };
 
     ///////////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    class virtual_inherit_from : virtual public T
+    class PUZZ_API virtual_inherit_from : virtual public T
     {
         using T::T;
     };
@@ -35,7 +52,7 @@ namespace puzz
     ///////////////////////////////////////////////////////////////////////////////
 
     template <typename Derived, typename... Bases>
-    class Inherit : public Bases...
+    class PUZZ_API Inherit : public Bases...
     {
     public:
         template <typename... Args>
@@ -61,7 +78,7 @@ namespace puzz
     ///////////////////////////////////////////////////////////////////////////////
 
     template <typename Derived, typename... Bases>
-    class Inherit<abstract_method<Derived>, Bases...> : public Bases...
+    class PUZZ_API Inherit<abstract_method<Derived>, Bases...> : public Bases...
     {
     public:
         template <typename... Args>
@@ -84,7 +101,7 @@ namespace puzz
     ///////////////////////////////////////////////////////////////////////////////
 
     template <typename Derived>
-    class Inherit<Derived>
+    class PUZZ_API Inherit<Derived>
     {
     public:
         virtual ~Inherit() = default;
@@ -104,7 +121,7 @@ namespace puzz
     ///////////////////////////////////////////////////////////////////////////////
 
     template <typename Derived>
-    class Inherit<abstract_method<Derived>>
+    class PUZZ_API Inherit<abstract_method<Derived>>
     {
     public:
         virtual ~Inherit() = default;

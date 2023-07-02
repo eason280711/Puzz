@@ -5,7 +5,7 @@
 
 namespace puzz
 {
-    class __declspec(dllexport) Application
+    class PUZZ_API Application
     {
     public:
         Application();

@@ -23,7 +23,6 @@ namespace puzz
 
     void Application::Run()
     {
-        std::cout << "test" << std::endl;
         while (true)
         {
             for (const auto& layer : getLayers())
@@ -43,7 +42,7 @@ namespace puzz
         PushLayer(keyboardLayer);
         const ref_ptr<Layer> consoleLayer = CreateConsoleLayer();
         PushLayer(consoleLayer);
-        const ref_ptr<Layer> pluginLayer = CreateDynamicLibraryLayer("DLL","editor.dll");
+        const ref_ptr<Layer> pluginLayer = CreateDynamicLibraryLayer();
         PushLayer(pluginLayer);
     }
 

@@ -13,5 +13,7 @@ configure_file(${CMAKE_SOURCE_DIR}/cmake/Config.h.cmake ${CMAKE_SOURCE_DIR}/puzz
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 include(puzzlib/puzzlib.cmake)
-include(editor/editor.cmake)
+
+include(test/test.cmake)
+
 include(application/application.cmake)

@@ -1,9 +1,9 @@
 #include <windows.h>
-#include <iostream>
 #include <spdlog/logger.h>
+#include <Core/Inherit.h>
 
-extern "C" __declspec(dllexport) void SetLogger(std::shared_ptr<spdlog::logger> logger) {
-    logger->info("DLL ON");
+extern "C" USER_API void SetLogger(std::shared_ptr<spdlog::logger> logger) {
+    logger->info("DLL on");
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule,
@@ -16,7 +16,9 @@ BOOL APIENTRY DllMain(HMODULE hModule,
         case DLL_PROCESS_ATTACH:
             break;
         case DLL_THREAD_ATTACH:
+            break;
         case DLL_THREAD_DETACH:
+            break;
         case DLL_PROCESS_DETACH:
             break;
     }
