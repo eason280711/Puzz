@@ -10,6 +10,7 @@
 #include "Puzzles/Dispatchers/layer/DispatchersLayer.h"
 #include "Puzzles/Console/layer/ConsoleLayer.h"
 #include "Puzzles/Plugin/layer/DllLayer.h"
+#include "Puzzles/Render/layer/RenderLayer.h"
 
 namespace puzz
 {
@@ -44,6 +45,8 @@ namespace puzz
         PushLayer(consoleLayer);
         const ref_ptr<Layer> pluginLayer = CreateDynamicLibraryLayer();
         PushLayer(pluginLayer);
+        const ref_ptr<Layer> renderLayer = CreateRenderLayer();
+        PushLayer(renderLayer);
     }
 
     void Application::ShotDown()

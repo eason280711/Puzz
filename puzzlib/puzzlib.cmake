@@ -3,14 +3,33 @@ file(GLOB_RECURSE HEADERS "puzzlib/src/*.h")
 
 add_library(puzzlib SHARED ${SOURCES} ${HEADERS})
 
-find_path(PDC_INCLUDES curses.h)
-find_library(PDC_LIBS pdcurses REQUIRED)
-
 find_package(ftxui CONFIG REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
 
-target_link_libraries(puzzlib
-    ${PDC_LIBS}
+find_package(Corrade REQUIRED Main)
+find_package(Magnum REQUIRED GL Shaders)
+find_package(imgui REQUIRED)
+
+if(CORRADE_TARGET_APPLE)
+    find_package(Magnum REQUIRED CglContext)
+elseif(CORRADE_TARGET_UNIX)
+    find_package(Magnum REQUIRED GlxContext)
+elseif(CORRADE_TARGET_WINDOWS)
+    find_package(Magnum REQUIRED WglContext)
+else()
+    message(FATAL_ERROR "No context handler available on this platform")
+endif()
+
+set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
+
+target_link_libraries(puzzlib PRIVATE
     ftxui::dom ftxui::screen ftxui::component
+    glfw
+    Magnum::GL
+    Magnum::GLContext
+    Magnum::Magnum
+    Magnum::Shaders
+    imgui::imgui
 )
 
 target_include_directories(puzzlib PRIVATE

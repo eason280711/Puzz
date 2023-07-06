@@ -46,8 +46,8 @@ namespace puzz
         {
             if (m_isReloading && m_future.wait_for(std::chrono::seconds(0)) == std::future_status::ready)
             {
-                // 編譯完成，我們可以釋放舊的 DLL 並載入新的 DLL
-                // 在這裡調用你的 DLL 釋放和載入方法
+                // 編譯完成，可以釋放舊的 DLL 並載入新的 DLL
+                // 在這裡調用 DLL 釋放和載入方法
                 const ref_ptr<RuntimeModule> dynamicLibrary = new DllManager("DynamicLibrary", "test.dll");
 
                 dynamicLibrary->startUp();

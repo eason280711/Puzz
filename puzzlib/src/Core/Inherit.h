@@ -4,20 +4,20 @@
 #include <utility>
 
 #ifdef PUZZ_PLATFORM_WINDOWS
-#ifdef PUZZ_BUILD_DLL
-#define PUZZ_API __declspec(dllexport)
-#else
-#define PUZZ_API __declspec(dllimport)
+    #ifdef PUZZ_BUILD_DLL
+        #define PUZZ_API __declspec(dllexport)
+    #else
+        #define PUZZ_API __declspec(dllimport)
 #endif
 
 #ifdef USER_BUILD_DLL
-#define USER_API __declspec(dllexport)
+    #define USER_API __declspec(dllexport)
 #else
-#define USER_API __declspec(dllimport)
+    #define USER_API __declspec(dllimport)
 #endif
 
 #else
-#error PUZZ only support Windows!
+    #error PUZZ only support Windows!
 #endif
 
 namespace puzz
@@ -32,6 +32,8 @@ namespace puzz
     /*
     使用CRTP設計模式實現的繼承模板，參考自：
     https://www.fluentcpp.com/2017/09/12/how-to-return-a-smart-pointer-and-use-covariance/
+
+    暫時停止使用 clone, 並非所有的 object 都需要、且無法 clone 。
     */
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -62,17 +64,17 @@ namespace puzz
 
         virtual ~Inherit() = default;
 
-        ref_ptr<Derived> clone() const
-        {
-            return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
-        }
+        // ref_ptr<Derived> clone() const
+        // {
+        //     return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
+        // }
 
     protected:
     private:
-        virtual void* clone_impl() const override
-        {
-            return new Derived(static_cast<const Derived&>(*this));
-        }
+        // virtual void* clone_impl() const override
+        // {
+        //     return new Derived(static_cast<const Derived&>(*this));
+        // }
     };
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -88,14 +90,14 @@ namespace puzz
 
         virtual ~Inherit() = default;
 
-        ref_ptr<Derived> clone() const
-        {
-            return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
-        }
+        // ref_ptr<Derived> clone() const
+        // {
+        //     return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
+        // }
 
     protected:
     private:
-        virtual void* clone_impl() const = 0;
+        // virtual void* clone_impl() const = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -106,16 +108,16 @@ namespace puzz
     public:
         virtual ~Inherit() = default;
 
-        ref_ptr<Derived> clone() const
-        {
-            return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
-        }
+        // ref_ptr<Derived> clone() const
+        // {
+        //     return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
+        // }
 
     private:
-        virtual void* clone_impl() const
-        {
-            return new Derived(static_cast<const Derived&>(*this));
-        }
+        // virtual void* clone_impl() const
+        // {
+        //     return new Derived(static_cast<const Derived&>(*this));
+        // }
     };
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -126,13 +128,13 @@ namespace puzz
     public:
         virtual ~Inherit() = default;
 
-        ref_ptr<Derived> clone() const
-        {
-            return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
-        }
+        // ref_ptr<Derived> clone() const
+        // {
+        //     return ref_ptr<Derived>(static_cast<Derived*>(this->clone_impl()));
+        // }
 
     private:
-        virtual void* clone_impl() const = 0;
+        //virtual void* clone_impl() const = 0;
     };
 
     ///////////////////////////////////////////////////////////////////////////////
