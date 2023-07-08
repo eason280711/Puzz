@@ -1,16 +1,19 @@
+#pragma once
 #include "render.h"
 
 #include "Core/Core.h"
 #include "Core/Inherit.h"
+#include "Event/Dispatcher.h"
+#include "Puzzles/Logging/layer/LoggingLayer.h"
 
 namespace puzz
 {
     class WindowManager : public Inherit<WindowManager, RuntimeModule>
     {
     public:
-        WindowManager(std::function<GLFWwindow* ()> getWindowCallback,std::function<void(GLFWwindow*)> SetWindow) {
-            windowCallback = getWindowCallback;
-            setWindow = SetWindow;
+        WindowManager(std::function<GLFWwindow* ()> getWindow,std::function<void(GLFWwindow*)> setWindow) {
+            windowCallback = getWindow;
+            SetWindow = setWindow;
         }
         ~WindowManager() override {}
 
@@ -25,7 +28,7 @@ namespace puzz
                 throw std::runtime_error("Window has not been created yet");
             }
 
-            setWindow(window);
+            SetWindow(window);
 
             /* Make the window's context current */
             glfwMakeContextCurrent(window);
@@ -43,6 +46,6 @@ namespace puzz
         }
     private:
         std::function < GLFWwindow* ()> windowCallback;
-        std::function < void(GLFWwindow*)> setWindow;
+        std::function < void(GLFWwindow*)> SetWindow;
     };
 }

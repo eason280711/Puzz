@@ -1,4 +1,6 @@
 #pragma once
+#include <queue>
+
 #include "Core/Inherit.h"
 #include "Core/Object.h"
 #include "Event/Event.h"
@@ -38,7 +40,18 @@ namespace puzz
             listeners.clear();
         }
 
+        static void enqeueEvent(const ref_ptr<Event>& event)
+        {
+            eventQueue.push(event);
+        }
+
+        static std::queue<ref_ptr<Event>>& getEventQueue()
+        {
+            return eventQueue;
+        }
+
     private:
         Array<ref_ptr<Listener>> listeners;
+        static std::queue<ref_ptr<Event>> eventQueue;
     };
 }

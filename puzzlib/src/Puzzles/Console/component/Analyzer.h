@@ -80,11 +80,11 @@ namespace puzz
     class CustomEvent : public Inherit<CustomEvent, Event>
     {
     public:
-        CustomEvent(const std::string& name, const std::string& m) : Inherit<CustomEvent, Event>(name), msg(m)
+        CustomEvent(const std::string& name, const std::string& m) : Inherit<CustomEvent, Event>(EventType::CustomEvent,name), msg(m)
         {
         }
 
-        virtual bool Handle() override
+        bool Handle() override
         {
             PUZZ_CORE_INFO("[ CustomEvent ] Name: {} , Msg: {}", getName(), msg);
             return true;
@@ -115,7 +115,7 @@ namespace puzz
     class ReloadEvent : public Inherit<ReloadEvent, Event>
     {
     public:
-        ReloadEvent() : Inherit<ReloadEvent, Event>("ReloadEvent")
+        ReloadEvent() : Inherit<ReloadEvent, Event>(EventType::ReloadEvent,"ReloadEvent")
         {
         }
 

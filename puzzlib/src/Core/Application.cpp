@@ -3,6 +3,9 @@
 #include "Core/ref_ptr.h"
 #include "Layer/Layer.h"
 
+#include "Event/Dispatcher.h"
+#include "Event/Event.h"
+
 #include "Config/Config.h"
 
 #include "Puzzles/Logging/layer/LoggingLayer.h"
@@ -14,6 +17,8 @@
 
 namespace puzz
 {
+    std::queue<puzz::ref_ptr<puzz::Event>> puzz::Dispatcher::eventQueue;
+
     Application::Application()
     {
     };
@@ -24,8 +29,24 @@ namespace puzz
 
     void Application::Run()
     {
-        while (true)
+        while (this->IsRunning())
         {
+            auto eventQueue = Dispatcher::getEventQueue();
+
+            while (!eventQueue.empty())
+            {
+                const auto& event = eventQueue.front();
+
+                if (this->onEvent(*event) == false)
+                    this->Close();
+
+                for (const auto& layer : getLayers())
+                {
+                    layer->onEvent(event);
+                }
+                eventQueue.pop();
+            }
+
             for (const auto& layer : getLayers())
             {
                 layer->Tick();
@@ -56,4 +77,14 @@ namespace puzz
             layer->onDetach();
         }
     }
+
+    bool Application::onEvent(Event& e)
+    {
+        if(e.getType() == EventType::ExitEvent)
+        {
+            return false;
+        }
+        return true;
+    }
+
 }

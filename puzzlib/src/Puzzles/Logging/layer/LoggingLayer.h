@@ -48,16 +48,27 @@ namespace puzz
             }
         };
 
-        void onEvent(const ref_ptr<Event> event) override
+        bool onEvent(const ref_ptr<Event> event) override
         {
-            if (event->getName() == "KeyPressEvent")
+            if (event->getType() == EventType::KeyPressed)
             {
                 const int keycode = event->getData<int>();
                 const std::string log = "[ KeyPressEvent ] " + std::to_string(keycode) + " is pressed";
                 PUZZ_CORE_TRACE(log);
             }
-            else
-                event->Handle();
+            else if(event->getType() == EventType::KeyReleased)
+            {
+                const int keycode = event->getData<int>();
+                const std::string log = "[ KeyReleaseEvent ] " + std::to_string(keycode) + " is released";
+                PUZZ_CORE_TRACE(log);
+            }
+            else if(event->getType() == EventType::KeyRepeat)
+            {
+                const int keycode = event->getData<int>();
+                const std::string log = "[ KeyRepeatEvent ] " + std::to_string(keycode) + " is repeat";
+                PUZZ_CORE_TRACE(log);
+            }
+            return true;
         };
 
     private:

@@ -20,7 +20,7 @@ namespace puzz
         // analyser = ref_ptr(new Analyser());
         TUIinit();
         const std::shared_ptr<spdlog::sinks::sink> new_sink = std::make_shared<mSink>(
-            container2, screen_interactive, 5000);
+            container2, screen_interactive, 100);
         LogManager::GetCoreLogger()->sinks().clear();
         LogManager::GetCoreLogger()->sinks().push_back(new_sink);
 

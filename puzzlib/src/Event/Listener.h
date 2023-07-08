@@ -13,6 +13,6 @@ namespace puzz
         ~Listener() override
         {
         };
-        virtual void onEvent(ref_ptr<Event> event) = 0;
+        virtual bool onEvent(ref_ptr<Event> event) = 0;
     };
 }

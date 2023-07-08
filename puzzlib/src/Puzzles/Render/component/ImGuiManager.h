@@ -8,9 +8,9 @@ namespace puzz
     class ImGuiManager : public Inherit<ImGuiManager, RuntimeModule>
     {
     public:
-        ImGuiManager(std::function<GLFWwindow* ()> getWindowCallback)
+        ImGuiManager(std::function<GLFWwindow* ()> getWindow)
         {
-            windowCallback = getWindowCallback;
+            windowCallback = getWindow;
         }
         ~ImGuiManager() override {}
 

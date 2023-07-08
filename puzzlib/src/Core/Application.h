@@ -14,6 +14,10 @@ namespace puzz
         virtual void Run();
         virtual void Init();
         virtual void ShotDown();
+        virtual bool onEvent(Event& e);
+
+        bool IsRunning() { return m_Running; }
+        void Close() { m_Running = false; }
 
         void PushLayer(const ref_ptr<Layer>& layer)
         {
@@ -25,6 +29,7 @@ namespace puzz
 
     private:
         Array<ref_ptr<Layer>> m_Layers;
+        bool m_Running = true;
     };
 
     ref_ptr<Application> CreateApplication();

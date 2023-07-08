@@ -48,8 +48,9 @@ namespace puzz
             }
         };
 
-        void onEvent(ref_ptr<Event> event) override
+        bool onEvent(ref_ptr<Event> event) override
         {
+            return true;
         };
 
     private:

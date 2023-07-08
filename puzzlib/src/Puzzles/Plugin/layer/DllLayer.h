@@ -62,15 +62,15 @@ namespace puzz
             }
         }
 
-        void onEvent(const ref_ptr<Event> event) override
+        bool onEvent(const ref_ptr<Event> event) override
         {
-            if (event->getName() == "ReloadEvent")
+            if (event->getType() == EventType::ReloadEvent)
             {
-                // Reload
                 reloadDll();
             }
             else
-                event->Handle();
+                return event->Handle();
+            return true;
         };
 
         void reloadDll()

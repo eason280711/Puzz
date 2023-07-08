@@ -40,8 +40,9 @@ namespace puzz
         {
         };
 
-        void onEvent(ref_ptr<Event> event) override
+        bool onEvent(ref_ptr<Event> event) override
         {
+            return true;
         };
         const std::string& getName() const { return m_DebugName; }
 

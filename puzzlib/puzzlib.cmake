@@ -6,9 +6,17 @@ add_library(puzzlib SHARED ${SOURCES} ${HEADERS})
 find_package(ftxui CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 
-find_package(Corrade REQUIRED Main)
-find_package(Magnum REQUIRED GL Shaders)
+find_package(Corrade REQUIRED Containers Utility)
+find_package(Magnum REQUIRED 
+    GL 
+    Shaders 
+    MeshTools
+    Primitives
+    SceneGraph
+    Trade)
+
 find_package(imgui REQUIRED)
+find_package(box2d CONFIG REQUIRED)
 
 if(CORRADE_TARGET_APPLE)
     find_package(Magnum REQUIRED CglContext)
@@ -23,13 +31,19 @@ endif()
 set_directory_properties(PROPERTIES CORRADE_USE_PEDANTIC_FLAGS ON)
 
 target_link_libraries(puzzlib PRIVATE
+    Corrade::Containers Corrade::Utility
     ftxui::dom ftxui::screen ftxui::component
     glfw
     Magnum::GL
     Magnum::GLContext
     Magnum::Magnum
     Magnum::Shaders
+    Magnum::MeshTools
+    Magnum::Primitives
+    Magnum::SceneGraph
+    Magnum::Trade
     imgui::imgui
+    box2d::box2d
 )
 
 target_include_directories(puzzlib PRIVATE

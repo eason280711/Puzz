@@ -25,4 +25,9 @@ namespace puzz
     private:
         static TreeMap<std::string, ref_ptr<Dispatcher>> s_Dispatchers;
     };
+
+    inline void RegisterDispatcher(const std::string& name,ref_ptr<Listener> listener)
+    {
+        DispatchersManager::getDispatchers()[name] -> addListener(listener);
+    }
 }

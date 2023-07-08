@@ -9,6 +9,22 @@
 #include <Magnum/Math/Color.h>
 #include <Magnum/Platform/GLContext.h>
 #include <Magnum/Shaders/VertexColorGL.h>
+#include <Corrade/Containers/GrowableArray.h>
+#include <Corrade/Utility/Arguments.h>
+#include <Magnum/GL/Context.h>
+#include <Magnum/Math/ConfigurationValue.h>
+#include <Magnum/Math/DualComplex.h>
+#include <Magnum/MeshTools/Compile.h>
+#include <Magnum/Platform/Sdl2Application.h>
+#include <Magnum/Primitives/Square.h>
+#include <Magnum/SceneGraph/Camera.h>
+#include <Magnum/SceneGraph/Drawable.h>
+#include <Magnum/SceneGraph/TranslationRotationScalingTransformation2D.h>
+#include <Magnum/SceneGraph/Scene.h>
+#include <Magnum/Shaders/FlatGL.h>
+#include <Magnum/Trade/MeshData.h>
 #include <GLFW/glfw3.h>
+
+#include <box2d/box2d.h>
 
 using namespace Magnum;

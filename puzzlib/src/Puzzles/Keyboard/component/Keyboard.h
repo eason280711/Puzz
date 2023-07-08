@@ -1,5 +1,7 @@
 #pragma once
 
+#include <chrono>
+
 #include "Core/Core.h"
 #include "Core/Inherit.h"
 
@@ -19,6 +21,9 @@ namespace puzz
         bool isKeyPressed(int vkey) const;
 
     private:
-        bool m_keyStates[256]; // 監聽所有的鍵盤按鍵
+        bool m_keyStates[256];
+        bool m_keyStatesPrev[256];
+        bool m_keyRepeatStarted[256];
+        std::chrono::time_point<std::chrono::high_resolution_clock> m_lastKeyPressTime[256];
     };
 }

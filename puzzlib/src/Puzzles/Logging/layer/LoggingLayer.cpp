@@ -8,11 +8,8 @@ namespace puzz
 
         const ref_ptr<Listener> listener = dynamic_pointer_cast<Layer, Listener>(layer);
 
-        const auto keyboardDispatcher = DispatchersManager::getDispatchers()["KeyBoard"];
-        keyboardDispatcher->addListener(listener);
-
-        const auto systemDispatcher = DispatchersManager::getDispatchers()["System"];
-        systemDispatcher->addListener(listener);
+        RegisterDispatcher("KeyBoard",listener);
+        RegisterDispatcher("System",listener);
 
         return layer;
     }

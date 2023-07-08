@@ -7,6 +7,7 @@
 #include "Puzzles/Render/component/ImGuiManager.h"
 
 #include "Puzzles/Render/component/render.h"
+#include <Event/Dispatcher.h>
 
 namespace puzz
 {
@@ -21,6 +22,9 @@ namespace puzz
     private:
         Platform::GLContext* ctx;
     };
+
+    typedef SceneGraph::Object<SceneGraph::TranslationRotationScalingTransformation2D> Object2D;
+    typedef SceneGraph::Scene<SceneGraph::TranslationRotationScalingTransformation2D> Scene2D;
 
     class RenderStuffHolder {
     public:
@@ -130,12 +134,11 @@ namespace puzz
     public:
         RenderLayer() : Inherit<RenderLayer, Layer>("RenderLayer")
         {
-            const ref_ptr<RuntimeModule> windowManager = new WindowManager(
-                [this]() { return this->getWindow(); },
-                [this](GLFWwindow* window) { this->setWindow(window); }
-            );
+            auto getwindow = [this]() { return window; };
+            auto setwindow = [this](GLFWwindow* window) { this->window = window; };
 
-            const ref_ptr<RuntimeModule> imGuiManager = new ImGuiManager([this]() { return this->getWindow(); });
+            const ref_ptr<RuntimeModule> windowManager = new WindowManager(getwindow,setwindow);
+            const ref_ptr<RuntimeModule> imGuiManager = new ImGuiManager(getwindow);
 
             pushRuntimeModule(windowManager);
             pushRuntimeModule(imGuiManager);
@@ -167,7 +170,7 @@ namespace puzz
         void Tick() override
         {
             /* Loop until the user closes the window */
-            while (!glfwWindowShouldClose(window)) {
+            if (!glfwWindowShouldClose(window)) {
 
                 // Start the Dear ImGui frame
                 ImGui_ImplOpenGL3_NewFrame();
@@ -190,22 +193,18 @@ namespace puzz
                 /* Poll for and process events */
                 glfwPollEvents();
             }
+            else
+            {
+                auto event = new ExitEvent();
+                Dispatcher::enqeueEvent(event);
+            }
         }
 
-        void onEvent(const ref_ptr<Event> event) override
+        bool onEvent(const ref_ptr<Event> event) override
         {
-
+            return true;
         };
 
-        GLFWwindow* getWindow() const
-        {
-            return window;
-        }
-
-        void setWindow(GLFWwindow* window)
-        {
-            this->window = window;
-        }
     private:
         ref_ptr<RenderStuffHolder> renderStuffHolder;
         ref_ptr<UIStuffHolder> uiStuffHolder;
