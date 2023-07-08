@@ -28,3 +28,4 @@
 #include <box2d/box2d.h>
 
 using namespace Magnum;
+using namespace Math::Literals;

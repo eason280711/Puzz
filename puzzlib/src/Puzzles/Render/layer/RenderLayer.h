@@ -3,10 +3,12 @@
 #include "Core/ref_ptr.h"
 #include "Core/Core.h"
 #include "Layer/Layer.h"
+#include "Event/Event.h"
 #include "Puzzles/Render/component/WindowManager.h"
 #include "Puzzles/Render/component/ImGuiManager.h"
 
-#include "Puzzles/Render/component/render.h"
+#include "Puzzles/Render/component/SceneGraph.h"
+
 #include <Event/Dispatcher.h>
 
 namespace puzz
@@ -23,48 +25,6 @@ namespace puzz
         Platform::GLContext* ctx;
     };
 
-    typedef SceneGraph::Object<SceneGraph::TranslationRotationScalingTransformation2D> Object2D;
-    typedef SceneGraph::Scene<SceneGraph::TranslationRotationScalingTransformation2D> Scene2D;
-
-    class RenderStuffHolder {
-    public:
-        RenderStuffHolder() : shader(new Shaders::VertexColorGL2D())
-        {
-            /* Setup the colored triangle */
-            using namespace Math::Literals;
-
-            struct TriangleVertex {
-                Vector2 position;
-                Color3 color;
-            };
-            const TriangleVertex vertices[]{
-                {{-0.5f, -0.5f}, 0xff0000_rgbf},    /* Left vertex, red color */
-                {{ 0.5f, -0.5f}, 0x00ff00_rgbf},    /* Right vertex, green color */
-                {{ 0.0f,  0.5f}, 0x0000ff_rgbf}     /* Top vertex, blue color */
-            };
-            mesh = new GL::Mesh{};
-            mesh->setCount(Containers::arraySize(vertices))
-                .addVertexBuffer(GL::Buffer{vertices}, 0,
-                    Shaders::VertexColorGL2D::Position{},
-                    Shaders::VertexColorGL2D::Color3{});
-        }
-        ~RenderStuffHolder() {
-            delete mesh;
-            delete shader;
-        }
-
-        void draw()
-        {
-            /* Render here */
-            GL::defaultFramebuffer.clear(GL::FramebufferClear::Color);
-            shader -> draw(*mesh);
-        }
-
-    private:
-        GL::Mesh* mesh;
-        Shaders::VertexColorGL2D* shader;
-    };
-
     class UIStuffHolder
     {
     public:
@@ -73,11 +33,6 @@ namespace puzz
             //get io
             ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-            // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-            if (show_demo_window)
-                ImGui::ShowDemoWindow(&show_demo_window);
-
-            // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
             {
                 static float f = 0.0f;
                 static int counter = 0;
@@ -97,16 +52,6 @@ namespace puzz
                 ImGui::Text("counter = %d", counter);
 
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-                ImGui::End();
-            }
-
-            // 3. Show another simple window.
-            if (show_another_window)
-            {
-                ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-                ImGui::Text("Hello from another window!");
-                if (ImGui::Button("Close Me"))
-                    show_another_window = false;
                 ImGui::End();
             }
         }
@@ -187,6 +132,15 @@ namespace puzz
 
                 ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+                ImGuiIO& io = ImGui::GetIO(); (void)io;
+                if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+                {
+                    GLFWwindow* backup_current_context = glfwGetCurrentContext();
+                    ImGui::UpdatePlatformWindows();
+                    ImGui::RenderPlatformWindowsDefault();
+                    glfwMakeContextCurrent(backup_current_context);
+                }
+
                 /* Swap front and back buffers */
                 glfwSwapBuffers(window);
 
@@ -202,6 +156,11 @@ namespace puzz
 
         bool onEvent(const ref_ptr<Event> event) override
         {
+            if(event->getType() == EventType::MouseButtonPressed)
+            {
+                auto info = event->getData<Array<double>>();
+                renderStuffHolder->onMouseEvent(info);
+            }
             return true;
         };
 

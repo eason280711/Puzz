@@ -31,11 +31,14 @@ namespace puzz
     {
         while (this->IsRunning())
         {
-            auto eventQueue = Dispatcher::getEventQueue();
+            std::queue<ref_ptr<Event>> tempQueue = Dispatcher::getEventQueue();
 
-            while (!eventQueue.empty())
+            std::queue<ref_ptr<Event>> empty;
+            std::swap(Dispatcher::getEventQueue(), empty);
+
+            while (!tempQueue.empty())
             {
-                const auto& event = eventQueue.front();
+                const auto& event = tempQueue.front();
 
                 if (this->onEvent(*event) == false)
                     this->Close();
@@ -44,7 +47,7 @@ namespace puzz
                 {
                     layer->onEvent(event);
                 }
-                eventQueue.pop();
+                tempQueue.pop();
             }
 
             for (const auto& layer : getLayers())
@@ -52,7 +55,7 @@ namespace puzz
                 layer->Tick();
             }
         }
-    };
+    }
 
     void Application::Init()
     {

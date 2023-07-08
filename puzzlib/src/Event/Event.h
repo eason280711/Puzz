@@ -155,4 +155,21 @@ namespace puzz
     private:
     };
 
+    class MouseEvents : public Inherit<MouseEvents, Event>
+    {
+        public:
+        MouseEvents() : Inherit<MouseEvents, Event>(EventType::MouseButtonPressed, "MouseEvents")
+        {
+        }
+
+        ~MouseEvents() override
+        {
+        }
+
+        bool Handle() override
+        {
+            return true;
+        };
+    };
+
 }
