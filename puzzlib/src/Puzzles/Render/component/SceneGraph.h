@@ -23,6 +23,8 @@ namespace puzz
 
         void onMouseEvent(Array<double> &info);
 
+        GL::Texture2D& getTexture() { return tex; }
+
     private:
         b2Body* createBody(Object2D& object, const Vector2& size, b2BodyType type, const DualComplex& transformation, Float density = 1.0f);
 
@@ -36,6 +38,8 @@ namespace puzz
         SceneGraph::Camera2D* _camera;
         SceneGraph::DrawableGroup2D _drawables;
         Containers::Optional<b2World> _world;
+        GL::Framebuffer fbo;
+        GL::Texture2D tex;
     };
 
     class BoxDrawable : public SceneGraph::Drawable2D {
@@ -51,15 +55,23 @@ namespace puzz
         Color3 _color;
     };
 
-    RenderStuffHolder::RenderStuffHolder()
+    RenderStuffHolder::RenderStuffHolder():fbo(GL::defaultFramebuffer.viewport())
     {
+        tex.setMagnificationFilter(GL::SamplerFilter::Linear)
+            .setMinificationFilter(GL::SamplerFilter::Linear, GL::SamplerMipmap::Linear)
+            .setWrapping(GL::SamplerWrapping::ClampToEdge)
+            .setStorage(1, GL::TextureFormat::RGBA8, Vector2i(1920, 1080));  // 假設你的紋理大小為 800x600
+
+        fbo.attachTexture(GL::Framebuffer::ColorAttachment{0}, tex, 0)
+            .mapForDraw({ {0, GL::Framebuffer::ColorAttachment{0}} });
+
         const DualComplex globalTransformation = DualComplex::fromMatrix(Matrix3{}).normalized();
 
         /* Configure camera */
         _cameraObject = new Object2D{ &_scene };
         _camera = new SceneGraph::Camera2D{ *_cameraObject };
         _camera->setAspectRatioPolicy(SceneGraph::AspectRatioPolicy::Extend)
-            .setProjectionMatrix(Matrix3::projection({ 20.0f, 20.0f }));
+            .setProjectionMatrix(Matrix3::projection({ 20.0f * 16.0f / 9.0f, 20.0f }));
 
         /* Create the Box2D world with the usual gravity vector */
         _world.emplace(b2Vec2{ 0.0f, -9.81f });
@@ -118,7 +130,8 @@ namespace puzz
 
     inline void RenderStuffHolder::draw()
     {
-        GL::defaultFramebuffer.clear(GL::FramebufferClear::Color);
+        fbo.bind();
+        fbo.clear(GL::FramebufferClear::Color);
 
         /* Step the world and update all object positions */
         _world->Step(1.0f / 60.0f, 6, 2);
@@ -137,14 +150,16 @@ namespace puzz
         _mesh.setInstanceCount(_instanceData.size());
         _shader.setTransformationProjectionMatrix(_camera->projectionMatrix())
             .draw(_mesh);
+
+        GL::defaultFramebuffer.bind();
     }
 
     inline void RenderStuffHolder::onMouseEvent(Array<double> &info)
     {
         double xpos = info[0], ypos = info[1];
         int windowWidth = info[2], windowHeight = info[3];
-        // 計算滑鼠位置在 Box2D 世界中的位置。讓它相對於視窗，原點在中心，然後縮放到世界大小，並且 Y 軸反向。
-        const auto position = _camera->projectionSize() * Vector2::yScale(-1.0f) * (Vector2{ float(xpos), float(ypos) } / Vector2{ float(windowWidth), float(windowHeight) } - Vector2{ 0.5f });
+        const auto position = _camera->projectionSize() * Vector2::yScale(-1.0f) * (Vector2{ float(xpos), float(ypos) } / Vector2{ float(windowWidth), float(windowHeight) } *Vector2{ 16.0f / 9.0f, 1.0f } - Vector2{ 0.5f });
+
 
         auto destroyer = new Object2D{ &_scene };
         createBody(*destroyer, { 0.5f, 0.5f }, b2_dynamicBody, DualComplex::translation(position), 2.0f);

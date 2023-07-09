@@ -14,12 +14,16 @@ namespace puzz
     {
         if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
         {
-            PUZZ_CORE_DEBUG("Mouse button pressed at time: {}",glfwGetTime());
             double xpos, ypos;
             glfwGetCursorPos(window, &xpos, &ypos);
 
             int windowWidth, windowHeight;
             glfwGetWindowSize(window, &windowWidth, &windowHeight);
+
+            PUZZ_CORE_DEBUG("GLFW main pos: {} {}", xpos, ypos);
+            PUZZ_CORE_DEBUG("GLFW main size: {} {}", windowWidth, windowHeight);
+
+            PUZZ_CORE_INFO("---------------------------------------");
 
             ref_ptr<Event> event = new MouseEvents();
             auto data = new Data<Array<double>>({ xpos ,ypos,(double)windowWidth,(double)windowHeight});
@@ -27,6 +31,23 @@ namespace puzz
             event->setDataHolder(dynamic_pointer_cast<Data<Array<double>>, DataHolder>(data));
             Dispatcher::enqeueEvent(event);
         }
+    }
+
+    void window_callback(GLFWwindow* window, int xpos, int ypos)
+    {
+        int windowWidth, windowHeight;
+        glfwGetWindowSize(window, &windowWidth, &windowHeight);
+
+        PUZZ_CORE_DEBUG("GLFW main pos: {} {}", xpos, ypos);
+        PUZZ_CORE_DEBUG("GLFW main size: {} {}", windowWidth, windowHeight);
+
+        PUZZ_CORE_INFO("---------------------------------------");
+
+        ref_ptr<Event> event = new WindowMoveEvent();
+        auto data = new Data<Array<double>>({ (double)xpos ,(double)ypos,(double)windowWidth,(double)windowHeight });
+
+        event->setDataHolder(dynamic_pointer_cast<Data<Array<double>>, DataHolder>(data));
+        Dispatcher::enqeueEvent(event);
     }
 
     class WindowManager : public Inherit<WindowManager, RuntimeModule>
@@ -42,8 +63,15 @@ namespace puzz
         {
             if (!glfwInit()) return;
 
+            // set glfw hint
+
+            //glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+
+            //glfwWindowHint(GLFW_DECORATED, false);
+
             GLFWwindow* window = glfwCreateWindow(
-                800, 800, "Puzz Application", nullptr, nullptr);
+                1920, 1080, "Puzz Application", nullptr, nullptr);
             if (!window) {
                 glfwTerminate();
                 throw std::runtime_error("Window has not been created yet");
@@ -55,6 +83,11 @@ namespace puzz
             glfwMakeContextCurrent(window);
 
             glfwSetMouseButtonCallback(window, mouse_button_callback);
+
+            glfwSetWindowSizeCallback(window, window_callback);
+            glfwSetWindowPosCallback(window, window_callback);
+
+            glfwSetWindowPos(window, 200, 100);
         }
 
         void shutDown() override

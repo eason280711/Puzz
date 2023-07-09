@@ -28,37 +28,83 @@ namespace puzz
     class UIStuffHolder
     {
     public:
-        void UILogic()
-        {
-            //get io
-            ImGuiIO& io = ImGui::GetIO(); (void)io;
+        ImVec2 mainWindowPos_, mainWindowSize_, childWindowPos_, childWindowSize_;
+        int glfwWindowPosX = 0, glfwWindowPosY = 0,glfwWindowWidth = 0, glfwWindowHeight = 0;
 
+        void UILogic(GL::Texture2D& tex) {
+            ImGuiStyle& style = ImGui::GetStyle();
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+
+            ImGui::SetNextWindowSize(ImVec2((float)glfwWindowWidth, (float)glfwWindowHeight));
+            ImGui::SetNextWindowPos(ImVec2((float)glfwWindowPosX, (float)glfwWindowPosY));
+
+            if (ImGui::Begin("##fullscreen", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDecoration))
             {
-                static float f = 0.0f;
-                static int counter = 0;
+                if (ImGui::BeginMenuBar())
+                {
+                    if (ImGui::BeginMenu("File"))
+                    {
+                        if (ImGui::MenuItem("New File"))
+                        {
+                            // Handle new file creation
+                        }
+                        if (ImGui::MenuItem("Save File"))
+                        {
+                            // Handle file save
+                        }
+                        ImGui::EndMenu();
+                    }
+                    if (ImGui::BeginMenu("Settings"))
+                    {
+                        // add settings options here
+                        ImGui::EndMenu();
+                    }
+                    ImGui::EndMenuBar();
+                }
+                ImVec2 wsize = ImGui::GetContentRegionAvail(); // get available size in child window
 
-                ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+                if (ImGui::BeginChild("##buttonArea", ImVec2(wsize.x, 50), ImGuiWindowFlags_AlwaysUseWindowPadding | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse)) { // 50 is the height of button area
+                    float buttonWidth = wsize.x * 0.08f; // adjust to your needs, now 20% of window size
+                    float buttonHeight = 30; // adjust to your needs
+                    float buttonAreaHeight = ImGui::GetWindowSize().y;
 
-                ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-                ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-                ImGui::Checkbox("Another Window", &show_another_window);
+                    ImGui::Dummy(ImVec2(0.0f, (buttonAreaHeight - buttonHeight) / 4.0f)); // Add vertical spacing before the buttons to center them vertically
+                    ImGui::Dummy(ImVec2((wsize.x - 3 * buttonWidth - 2 * style.ItemSpacing.x) / 2.0f, 0)); // add space before buttons
+                    ImGui::SameLine();
 
-                ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-                ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+                    if (ImGui::Button("Button 1", ImVec2(buttonWidth, buttonHeight))) {
+                        // handle button click
+                    }
+                    ImGui::SameLine();
 
-                if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                    counter++;
-                ImGui::SameLine();
-                ImGui::Text("counter = %d", counter);
+                    if (ImGui::Button("Button 2", ImVec2(buttonWidth, buttonHeight))) {
+                        // handle button click
+                    }
+                    ImGui::SameLine();
 
-                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-                ImGui::End();
+                    if (ImGui::Button("Button 3", ImVec2(buttonWidth, buttonHeight))) {
+                        // handle button click
+                    }
+                }
+                ImGui::EndChild();
+
+                ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(40, 40));
+
+                wsize = ImVec2(wsize.x,wsize.y-50);
+                if (ImGui::BeginChild("##RenderArea", wsize, ImGuiWindowFlags_AlwaysUseWindowPadding | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse)) {
+                    ImGui::Image((ImTextureID)tex.id(), ImVec2(wsize.x -80, wsize.y -80), ImVec2(0, 1), ImVec2(1, 0));
+                }
+                ImGui::EndChild();
+
+                ImGui::PopStyleVar();
             }
+
+            ImGui::End();
+            ImGui::PopStyleVar();
         }
 
         void Render(GLFWwindow* window)
         {
-            // Rendering
             ImGui::Render();
 
             int display_w, display_h;
@@ -69,9 +115,8 @@ namespace puzz
         }
     private:
         // Our state
-        bool show_demo_window = true;
-        bool show_another_window = false;
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+        bool is_playing = false;  // Whether the video is currently playing.
     };
 
     class RenderLayer : public Inherit<RenderLayer, Layer>
@@ -122,13 +167,14 @@ namespace puzz
                 ImGui_ImplGlfw_NewFrame();
                 ImGui::NewFrame();
 
+                renderStuffHolder->draw();
+
                 // UI Logic
-                uiStuffHolder -> UILogic();
+                uiStuffHolder -> UILogic(renderStuffHolder->getTexture());
 
                 uiStuffHolder -> Render(window);
 
                 /* Render here */
-                renderStuffHolder ->draw();
 
                 ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -156,13 +202,25 @@ namespace puzz
 
         bool onEvent(const ref_ptr<Event> event) override
         {
-            if(event->getType() == EventType::MouseButtonPressed)
+            if (event->getType() == EventType::MouseButtonPressed)
             {
                 auto info = event->getData<Array<double>>();
+
                 renderStuffHolder->onMouseEvent(info);
             }
+            if (event->getType() == EventType::WindowMove)
+            {
+                auto info = event->getData<Array<double>>();
+
+                uiStuffHolder->glfwWindowPosX = info[0];
+                uiStuffHolder->glfwWindowPosY = info[1];
+
+                uiStuffHolder->glfwWindowWidth = info[2];
+                uiStuffHolder->glfwWindowHeight = info[3];
+            }
             return true;
-        };
+        }
+
 
     private:
         ref_ptr<RenderStuffHolder> renderStuffHolder;

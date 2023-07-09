@@ -4,3 +4,6 @@
 [submodule "puzzlib/vendor/FTXUI"]
 	path = puzzlib/vendor/FTXUI
 	url = https://github.com/ArthurSonzogni/FTXUI.git
+[submodule "puzzlib/vendor/ImGuiColorTextEdit"]
+	path = puzzlib/vendor/ImGuiColorTextEdit
+	url = https://github.com/BalazsJako/ImGuiColorTextEdit.git

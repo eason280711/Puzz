@@ -24,6 +24,9 @@
 #include <Magnum/Shaders/FlatGL.h>
 #include <Magnum/Trade/MeshData.h>
 #include <GLFW/glfw3.h>
+#include <Magnum/GL/Framebuffer.h>
+#include <Magnum/GL/Texture.h>
+#include <Magnum/GL/TextureFormat.h>
 
 #include <box2d/box2d.h>
 

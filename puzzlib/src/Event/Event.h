@@ -11,6 +11,7 @@ namespace puzz
         None = 0,
         KeyPressed, KeyReleased, KeyRepeat,
         MouseButtonPressed, MouseButtonReleased, MouseMoved,
+        WindowMove, WindowResize, WindowClose, WindowFocus, WindowLostFocus, WindowMaximize, WindowMinimize,
         ReloadEvent,CustomEvent,
         ExitEvent
     };
@@ -172,4 +173,21 @@ namespace puzz
         };
     };
 
+    class WindowMoveEvent: public Inherit<WindowMoveEvent, Event>
+    {
+        public:
+        WindowMoveEvent() : Inherit<WindowMoveEvent, Event>(EventType::WindowMove, "WindowMoveEvent")
+        {
+        }
+
+        ~WindowMoveEvent()
+        {
+
+        }
+
+        bool Handle() override
+        {
+            return true;
+        }
+    };
 }
