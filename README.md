@@ -2,52 +2,96 @@
 
 ![](./docs/Image/Logo.png)
 
+[中文]()
+
 --------------------------------------------------------------------------------
 
-這是一個用來練習與實作軟體開發概念的Side Project。將設計成框架的形式，將練習將各種設計模式和物件導向的概念應用在架構與系統中。更多訊息可以看[Quick Guide](#Quick-Guide)，整理了一些開發過程的資料。
+Puzz is a side project designed for practicing and implementing software development concepts. It is created in the form of a software framework (or game engine), which facilitates the application of various design patterns and object-oriented concepts in the system architecture. For more information, please refer to the [Quick Guide](#Quick-Guide), where I've compiled some data on the development process.
 
-題外話，這個專案的名字是Puzz，原先是指將功能模組化管理(規劃時的想法)的設計。但後來腦袋冒出一句話"It's a C++ Puzz"，Puzzle也有謎題的意思，C++開發對我來說就像解各種謎題，總覺得這名稱真有意境，LUL。
+A bit about the name: the project is called Puzz, inspired initially by the sense of assembling a puzzle when modularizing functionalities in the learning process. During development, the phrase "It's a C++ Puzz" popped up in my mind, and the name clicked. "Puzzle" also means a riddle or a problem, and for me, C++ development feels like solving various puzzles. I find the name quite poetic, LUL.
 
-# 進度
+# Progress
 
-根據你的環境，可以使用Visual Studio或是其他IDE來開啟、建置專案。目前我只嘗試過在Windows上使用Visual Studio 2022或是Ninja來建置專案。
-
-建置生成其中有一個檔案 `application.exe` 是應用程式的本體。可以由 `puzzlib/src/Core/Application.cpp` [檔案](https://github.com/eason280711/Puzz/blob/main/puzzlib/src/Core/Application.cpp)中的 `main` 函式來看到應用程式的原始碼。
-
-目前的架構是以 `component` 建構 `layer`，我稱其為 `puzzles` 。`application` 則是由 `layer` 堆疊而成。可以參考 `puzzlib/src/Puzzles` 的內容。現在在 `Application.cpp` 初步實現了 `Logging`、`KeyBoard`、`Dispatchers`、`Console` 的 `puzzles`。
-
-這是 Application 的範例。當你僅使用 `Logging`、`KeyBoard`、`Dispatchers` 這幾個 Puzzles 時呈現的畫面，將可以看到由 `KeyBoard` 所偵測的按鍵事件，並由 `Logging` 輸出到 Console 中。
-
-![](./docs/Image/example.png)
-
-而當你新增 `Console` 這個 Puzzle 時，將可以看到一個簡易的 `Console` ， 其將 `Logging` 重新導向到 `Console` 的畫面中。這個過程是低耦合的，你可以在任何時候新增或移除 `Console` 這個 Puzzle，而不會影響到其他的 Puzzle。
-
-![](./docs/Image/terminal.png)
-
-而 'Console' 也同時實現了 command analyzer 的功能，你可以在 Console 的輸入欄位中輸入 `/help` 來看到所有的指令。
-
-![](./docs/Image/command.png)
+- [X] Core System Architecture
+- [X] Functional Modules
+- [x] Rendering Support
+- [X] 2D Physics Engine
+- [X] Runtime Script System
+- [X] GUI
+- [ ] Implement a small game
+- [ ] Cross-platform
+- [ ] Testing
+- [ ] Debug Tool
+- [ ] Documentation
+- [ ] Examples
 
 # Table of Contents
 
+* [Architecture](#Architecture)
 * [Quick Guide](#Quick-Guide)
 * [Getting Started](#Getting-Started)
+    * [Dependencies](#Dependencies)
+    * [Build Steps](#Build-Steps)
+
+# Architecture
+
+I use the diagram below to introduce the architecture and operation principle (perhaps I'll redraw it formally using UML one day).
+
+![](./docs/Image/Puzz.drawio.svg)
+
+Puzz is compiled into a Dynamic Link Library (DLL), where EntryPoint contains the main function. Hence, all you need to do is include the Puzzlib header to create an application. You can create a class that inherits from `puzz::Application`, which will allow you to establish and control the application's process, as demonstrated in [application/src/Application.cpp](https://github.com/eason280711/Puzz/blob/main/application/src/Application.cpp).
+
+In [puzzlib/src/Core/Application](https://github.com/eason280711/Puzz/blob/main/puzzlib/src/Core/Application.cpp), you can see the default `puzz::Application` and its implementation.
+
+In the Init function, you can use PushLayer to push the implemented "Puzzle" into the Application's Layer Array. "Puzzle" is the smallest unit of a Layer composed of Components. In [puzzlib/src/Puzzles](https://github.com/eason280711/Puzz/tree/main/puzzlib/src/Puzzles), you can find a few Puzzles that I initially implemented for the framework. The implementation of a Puzzle should ideally have minimum coupling with other Puzzles. Therefore, except for the Dispatcher used for handling Events, removing any Puzzle should not affect the running of the program, unless it is an enhancement built on certain features.
+
+Here is an example. When you use only the `Logging`, `KeyBoard`, and `Dispatchers` Puzzles, you can see the key events detected by `KeyBoard` and output to the Console by `Logging`.
+
+![](./docs/Image/example.png)
+
+When you add the `Console` Puzzle, you will see a simple `Console`, which redirects `Logging` to the `Console` screen. This process is low-coupled; you can add or remove the `Console` Puzzle at any time without affecting other Puzzles.
+
+![](./docs/Image/terminal.png)
+
+The Run Function first handles the events in the Event Queue, and then updates the Puzzles' Tick in order. The Dispatcher, as a Puzzle for handling events, provides two ways to dispatch Events. One is to use `Dispatcher::dispatchEvent()`, which immediately sends the Event to the Listener registered with that Dispatcher and handles the Event on the spot. The other method is to use `Dispatcher::enqeueEvent()`, which can be used globally to enqueue the Event. As described in the Run Function above, the events in the Event Queue will be handled before each round of updates.
+
+As for the Plugin part of the above architecture diagram, Plugins are implemented by loading DLLs. They are designed so that users can write classes inheriting Puzzle's components. The DllManager reads a specific DLL and gets the defined component, and calls the Tick function during update. The DllManager is also a component, so it can be pushed into any Layer.
+
+When the Reload Event is dispatched at runtime, it will recompile the file, and after the compilation is completed, it will reload the DLL. This will be used to update the Puzzle Layer at runtime, achieving functions like modifying the UI, Render, etc., without having to restart the program.
 
 # Quick Guide
-整理了repository中的可以參考的連結，方便閱讀。
+I've compiled some links in the repository for easy reference.
 - Build & Run
-    - 快速開始 : [Quick Start](#Getting-Started)
+    - Quick Start: [Quick Start](#Getting-Started)
 - Code
-    - 原始碼 : [Puzz/puzzlib/](https://github.com/eason280711/Puzz/tree/main/puzzlib)
-    - 應用程式 : [Puzz/application/](https://github.com/eason280711/Puzz/blob/main/application)
-- 參考資料
-    - 開發日誌 : [Development Log](./docs/Log/DevelopmentLog.md)
-    - 設計概念 : [Design](https://github.com/eason280711/Puzz/tree/main/docs/Design)
-    - 外部參考資源 : [Resources](./docs/Resources/Resources.md)
+    - Source Code: [Puzz/puzzlib/](https://github.com/eason280711/Puzz/tree/main/puzzlib)
+    - Application: [Puzz/application/](https://github.com/eason280711/Puzz/blob/main/application)
+- Reference Material
+    - Development Log: [Development Log](./docs/Log/DevelopmentLog.md)
+    - Design Concepts: [Design](https://github.com/eason280711/Puzz/tree/main/docs/Design)
+    - External Resources: [Resources](./docs/Resources/Resources.md)
 
 # Getting Started
-雖然還沒完成，但如果真的需要的話，可以使用CMake來建置專案。
-目前需要 FIXUI、spdlog 的 dependency ，可以在 vendor 裡的 submodules 看見。
+So far, I've only tried to build the project on Windows using Visual Studio 2022. Some parts of the source code related to system functions use the Windows API. In the future, I plan to abstract these functions and add cross-platform support. While other tools can be used to build on Windows, like Ninja, I use the MSBuild command to compile the DLL in the plugin system, so the Visual Studio environment is still essential for now.
+
+## Dependencies
+Here are the current dependencies, which I primarily manage using [vcpkg](https://github.com/Microsoft/vcpkg). Other items such as Spdlog or Imgui's third-party extensions can be found in the vendor's submodules.
+
+- Main
+    - [Magnum](https://github.com/mosra/magnum)
+    - [Corrade](https://github.com/mosra/corrade)
+    - [Box2D](https://github.com/erincatto/box2d)
+    - [Glfw3](https://github.com/glfw/glfw)
+    - [Imgui](https://github.com/ocornut/imgui)
+    - [Ftxui](https://github.com/ArthurSonzogni/FTXUI)
+    - [Spdlog](https://github.com/gabime/spdlog)
+- Imgui Extension
+    - [ImGuiColorTextEdit](https://github.com/BalazsJako/ImGuiColorTextEdit)
+    - [ImGuiFileDialog](https://github.com/aiekick/ImGuiFileDialog)
+
+## Build Steps
+
+Though it's not complete, you can use CMake to generate project build files if needed.
 
 ```bash
 # clone repository
