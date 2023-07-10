@@ -3,7 +3,7 @@
 ![](./Image/Logo.png)
 
 
-[English]()
+[English](../README.md)
 
 --------------------------------------------------------------------------------
 
@@ -26,6 +26,20 @@
 - [ ] 文檔
 - [ ] 範例
 
+目前實現了一個簡易的 Editor，僅目前有主要的應用程式渲染畫面與一個的文字編輯器。這是與 Box2D 物理引擎互動的範例。
+![](https://imgur.com/VnImKIE.gif)
+
+Runtime DLL Reload
+![](https://imgur.com/q5vk5OH.gif)
+
+Debug ConSole
+![](https://imgur.com/MniullZ.gif)
+
+# Future Work
+
+- Neural Network Models Loading Puzzle
+- Network Puzzle
+...
 
 # Table of Contents
 

@@ -2,11 +2,11 @@
 
 ![](./docs/Image/Logo.png)
 
-[中文]()
+[中文](./docs/Chinese.md)
 
 --------------------------------------------------------------------------------
 
-Puzz is a side project designed for practicing and implementing software development concepts. It is created in the form of a software framework (or game engine), which facilitates the application of various design patterns and object-oriented concepts in the system architecture. For more information, please refer to the [Quick Guide](#Quick-Guide), where I've compiled some data on the development process.
+Puzz is a side project designed for practicing and implementing software development concepts. It is created in the form of an application framework (or game engine), which facilitates the application of various design patterns and object-oriented concepts in the system architecture. For more information, please refer to the [Quick Guide](#Quick-Guide), where I've compiled some data on the development process.
 
 A bit about the name: the project is called Puzz, inspired initially by the sense of assembling a puzzle when modularizing functionalities in the learning process. During development, the phrase "It's a C++ Puzz" popped up in my mind, and the name clicked. "Puzzle" also means a riddle or a problem, and for me, C++ development feels like solving various puzzles. I find the name quite poetic, LUL.
 
@@ -24,6 +24,21 @@ A bit about the name: the project is called Puzz, inspired initially by the sens
 - [ ] Debug Tool
 - [ ] Documentation
 - [ ] Examples
+
+I have currently implemented a simple Editor, which only currently has the main application rendering screen and a text editor. Here is an example of interacting with the physics engine.
+![](https://imgur.com/VnImKIE.gif)
+
+Runtime DLL Reload
+![](https://imgur.com/q5vk5OH.gif)
+
+Debug ConSole
+![](https://imgur.com/MniullZ.gif)
+
+# Future Work
+
+- Neural Network Models Loading Puzzle
+- Network Puzzle
+...
 
 # Table of Contents
 

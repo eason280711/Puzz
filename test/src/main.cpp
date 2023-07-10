@@ -3,7 +3,7 @@
 #include <Core/Inherit.h>
 
 extern "C" USER_API void SetLogger(std::shared_ptr<spdlog::logger> logger) {
-    logger->info("Runtime Reload");
+    logger->info("Runtime Reload 2");
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule,
@@ -24,6 +24,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     }
     return TRUE;
 }
+
 
 
 
