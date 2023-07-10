@@ -28,6 +28,7 @@ namespace puzz
             io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
             io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
             io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+            //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
             // Setup Dear ImGui style
             SetupImGuiStyle();

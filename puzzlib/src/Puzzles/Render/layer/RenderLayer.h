@@ -140,7 +140,7 @@ namespace puzz
 
             ImGui::End();
 
-            if (ImGui::Begin("Text Editor Demo", nullptr, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_MenuBar))
+            if (ImGui::Begin("Editor", nullptr, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_MenuBar))
             {
                 if (ImGui::BeginMenuBar())
                 {
