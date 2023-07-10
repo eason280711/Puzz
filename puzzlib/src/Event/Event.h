@@ -190,4 +190,17 @@ namespace puzz
             return true;
         }
     };
+
+    class ReloadEvent : public Inherit<ReloadEvent, Event>
+    {
+    public:
+        ReloadEvent() : Inherit<ReloadEvent, Event>(EventType::ReloadEvent, "ReloadEvent")
+        {
+        }
+
+        bool Handle() override
+        {
+            return true;
+        };
+    };
 }

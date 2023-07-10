@@ -1,7 +1,14 @@
 file(GLOB_RECURSE SOURCES "puzzlib/src/*.cpp")
 file(GLOB_RECURSE HEADERS "puzzlib/src/*.h")
 
-add_library(puzzlib SHARED ${SOURCES} ${HEADERS})
+file(GLOB_RECURSE TSOURCES "puzzlib/vendor/ImGuiColorTextEdit/*.h")
+file(GLOB_RECURSE THEADERS "puzzlib/vendor/ImGuiColorTextEdit/*.cpp")
+
+# should update to include CmakeLists.txt in ImGuiFileDialog
+file(GLOB_RECURSE FSOURCES "puzzlib/vendor/ImGuiFileDialog/*.h")
+file(GLOB_RECURSE FHEADERS "puzzlib/vendor/ImGuiFileDialog/*.cpp")
+
+add_library(puzzlib SHARED ${SOURCES} ${HEADERS} ${TSOURCES} ${THEADERS} ${FSOURCES} ${FHEADERS})
 
 find_package(ftxui CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
@@ -49,6 +56,8 @@ target_link_libraries(puzzlib PRIVATE
 target_include_directories(puzzlib PRIVATE
     ${CMAKE_SOURCE_DIR}/puzzlib/src
     ${CMAKE_SOURCE_DIR}/puzzlib/vendor/spdlog/include
+    ${CMAKE_SOURCE_DIR}/puzzlib/vendor/ImGuiColorTextEdit
+    ${CMAKE_SOURCE_DIR}/puzzlib/vendor/ImGuiFileDialog
     ${PDC_INCLUDES}
 )
 

@@ -112,20 +112,6 @@ namespace puzz
 
     // TODO: command Reroad Plugin
 
-    class ReloadEvent : public Inherit<ReloadEvent, Event>
-    {
-    public:
-        ReloadEvent() : Inherit<ReloadEvent, Event>(EventType::ReloadEvent,"ReloadEvent")
-        {
-        }
-
-        virtual bool Handle() override
-        {
-            PUZZ_CORE_INFO("[ ReloadEvent ]");
-            return true;
-        };
-    };
-
     class ReloadCommand : public Inherit<ReloadCommand, Command>
     {
     public:

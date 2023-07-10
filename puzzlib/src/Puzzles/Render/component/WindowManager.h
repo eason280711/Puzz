@@ -17,16 +17,14 @@ namespace puzz
             double xpos, ypos;
             glfwGetCursorPos(window, &xpos, &ypos);
 
+            int xloc, yloc;
+            glfwGetWindowPos(window, &xloc, &yloc);
+
             int windowWidth, windowHeight;
             glfwGetWindowSize(window, &windowWidth, &windowHeight);
 
-            PUZZ_CORE_DEBUG("GLFW main pos: {} {}", xpos, ypos);
-            PUZZ_CORE_DEBUG("GLFW main size: {} {}", windowWidth, windowHeight);
-
-            PUZZ_CORE_INFO("---------------------------------------");
-
             ref_ptr<Event> event = new MouseEvents();
-            auto data = new Data<Array<double>>({ xpos ,ypos,(double)windowWidth,(double)windowHeight});
+            auto data = new Data<Array<double>>({ xpos ,ypos,(double)windowWidth,(double)windowHeight,(double)xloc,(double)yloc});
 
             event->setDataHolder(dynamic_pointer_cast<Data<Array<double>>, DataHolder>(data));
             Dispatcher::enqeueEvent(event);
@@ -35,16 +33,14 @@ namespace puzz
 
     void window_callback(GLFWwindow* window, int xpos, int ypos)
     {
+        int xloc, yloc;
+        glfwGetWindowPos(window, &xloc, &yloc);
+
         int windowWidth, windowHeight;
         glfwGetWindowSize(window, &windowWidth, &windowHeight);
 
-        PUZZ_CORE_DEBUG("GLFW main pos: {} {}", xpos, ypos);
-        PUZZ_CORE_DEBUG("GLFW main size: {} {}", windowWidth, windowHeight);
-
-        PUZZ_CORE_INFO("---------------------------------------");
-
         ref_ptr<Event> event = new WindowMoveEvent();
-        auto data = new Data<Array<double>>({ (double)xpos ,(double)ypos,(double)windowWidth,(double)windowHeight });
+        auto data = new Data<Array<double>>({ (double)xpos ,(double)ypos,(double)windowWidth,(double)windowHeight,(double)xloc,(double)yloc});
 
         event->setDataHolder(dynamic_pointer_cast<Data<Array<double>>, DataHolder>(data));
         Dispatcher::enqeueEvent(event);

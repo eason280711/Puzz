@@ -7,3 +7,4 @@ build/
 !.vscode/extensions.json
 
 puzzlib/src/Config/Config.h
+resources/font/NotoSansTC-Medium.otf

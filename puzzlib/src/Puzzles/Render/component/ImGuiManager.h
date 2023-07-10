@@ -36,6 +36,9 @@ namespace puzz
             // Setup Platform/Renderer backends
             ImGui_ImplGlfw_InitForOpenGL(window, true);
             ImGui_ImplOpenGL3_Init("#version 330");
+
+            ImFont* font = io.Fonts->AddFontFromFileTTF(ROOT"/resources/font/NotoSansTC-Medium.otf", 20);
+
         }
 
         void shutDown() override

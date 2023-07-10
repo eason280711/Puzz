@@ -38,7 +38,7 @@ namespace puzz
         double repeatDelayInSeconds = (repeatDelay + 1) * 0.25;
         double repeatRateInSeconds = 1.0 / (repeatRate + 2);
 
-        for (int i = 0; i < 256; ++i)
+        for (int i = 1; i < 256; ++i)
         {
             if (m_keyStates[i])
             {

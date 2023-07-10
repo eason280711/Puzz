@@ -7,3 +7,6 @@
 [submodule "puzzlib/vendor/ImGuiColorTextEdit"]
 	path = puzzlib/vendor/ImGuiColorTextEdit
 	url = https://github.com/BalazsJako/ImGuiColorTextEdit.git
+[submodule "puzzlib/vendor/ImGuiFileDialog"]
+	path = puzzlib/vendor/ImGuiFileDialog
+	url = https://github.com/aiekick/ImGuiFileDialog.git

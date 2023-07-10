@@ -154,17 +154,35 @@ namespace puzz
         GL::defaultFramebuffer.bind();
     }
 
-    inline void RenderStuffHolder::onMouseEvent(Array<double> &info)
+    inline void RenderStuffHolder::onMouseEvent(Array<double>& info)
     {
-        double xpos = info[0], ypos = info[1];
-        int windowWidth = info[2], windowHeight = info[3];
-        const auto position = _camera->projectionSize() * Vector2::yScale(-1.0f) * (Vector2{ float(xpos), float(ypos) } / Vector2{ float(windowWidth), float(windowHeight) } *Vector2{ 16.0f / 9.0f, 1.0f } - Vector2{ 0.5f });
+        double mouseX = info[0], mouseY = info[1];
+        double glfwWindowWidth = info[2], glfwWindowHeight = info[3];
+        double glfwWindowX = info[4], glfwWindowY = info[5];
+        double renderWindowWidth = info[6], renderWindowHeight = info[7];
+        double renderWindowX = info[8], renderWindowY = info[9];
+
+        if (mouseX >= abs(glfwWindowX - renderWindowX) && mouseX <= abs(glfwWindowX - renderWindowX) + renderWindowWidth && mouseY >= abs(glfwWindowY - renderWindowY) && mouseY <= abs(glfwWindowY - renderWindowY) + renderWindowHeight)
+        {
+            PUZZ_CORE_INFO("Mouse click inside render window");
+            double xpos = (mouseX - abs(glfwWindowX - renderWindowX)) / renderWindowWidth;
+            double ypos = (mouseY - abs(glfwWindowY - renderWindowY)) / renderWindowHeight;
 
 
-        auto destroyer = new Object2D{ &_scene };
-        createBody(*destroyer, { 0.5f, 0.5f }, b2_dynamicBody, DualComplex::translation(position), 2.0f);
-        new BoxDrawable{ *destroyer, _instanceData, 0xffff66_rgbf, _drawables };
+            PUZZ_CORE_INFO("Mouse position: {0}, {1}", xpos, ypos);
+
+            float aspectRatio = static_cast<float>(renderWindowWidth) / static_cast<float>(renderWindowHeight);
+
+
+            const auto position = _camera->projectionSize() * Vector2::yScale(-1.0f) * (Vector2{ float(xpos*56/100), float(ypos) } *Vector2{ aspectRatio, 1.0f } - Vector2{ 0.5f });
+
+            auto destroyer = new Object2D{ &_scene };
+            createBody(*destroyer, { 0.5f, 0.5f }, b2_dynamicBody, DualComplex::translation(position), 2.0f);
+            new BoxDrawable{ *destroyer, _instanceData, 0xffff66_rgbf, _drawables };
+        }
     }
+
+
 
     inline RenderStuffHolder::~RenderStuffHolder()
     {
