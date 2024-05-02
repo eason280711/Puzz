@@ -2,25 +2,17 @@
 #include "Core/Object.h"
 #include "Core/Window.h"
 #include "Core/ref_ptr.h"
+#include "Render/Renderable.h"
 
 #include <string>
+#include <map>
 
 namespace puzz
 {
-    struct Texture {
-        unsigned short width, height;
-        float u1, v1, u2, v2;
-    };
-
-    struct Renderable {
-        float x, y;
-        Texture texture;
-    };
-
     class Renderer : public Inherit<RuntimeModule, Renderer>
     {
     public:
-        Renderer(ref_ptr<Window> window,std::string texturePath)
+        Renderer(ref_ptr<Window> window)
         {
         }
 
@@ -31,9 +23,12 @@ namespace puzz
         virtual void startFrame() = 0;
         virtual void render() = 0;
 
-        virtual void updateXY(float x, float y) = 0;
+        virtual void addRenderable(ref_ptr<Renderable> renderable,std::string name) = 0;
+        virtual void removeRenderable(ref_ptr<Renderable> renderable) = 0;
 
-        static ref_ptr<Renderer> create(ref_ptr<Window> window,std::string texturePath);
+        virtual ref_ptr<Renderable> getRenderable(const std::string& name) = 0;
+
+        static ref_ptr<Renderer> create(ref_ptr<Window> window);
     private:
     };
 }

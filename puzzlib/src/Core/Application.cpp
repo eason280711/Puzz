@@ -17,8 +17,11 @@
 
 #include "Core/Window.h"
 #include "Core/UI.h"
-#include "Core/Renderer.h"
+#include "Render/Renderer.h"
 #include "Core/WindowEventHandler.h"
+
+#include "Render/Renderable.h"
+#include "Render/Texture.h"
 
 namespace puzz
 {
@@ -51,7 +54,14 @@ namespace puzz
         m_window->startUp();
 
         m_ui = UI::create(m_window);
-        m_renderer = Renderer::create(m_window, "C:\\dev\\puzz\\test\\tkg.png");
+        m_renderer = Renderer::create(m_window);
+
+        auto tex = Texture::create("C:\\dev\\puzz\\test\\tkg.png");
+        auto renderable = Renderable::create(tex, 200, 0);
+        auto renderable2 = Renderable::create(tex, 400, 0);
+
+        m_renderer->addRenderable(renderable, "tkg");
+        m_renderer->addRenderable(renderable2, "tkg2");
 
         auto handler = CloseEventHandler::create(BIND_ACTION_FN(Application::Close));
         AddEventHandler(handler);
