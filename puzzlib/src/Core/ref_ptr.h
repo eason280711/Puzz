@@ -33,6 +33,17 @@ namespace puzz
             }
         }
 
+        template<typename U>
+        ref_ptr(const ref_ptr<U>& other) : m_ptr(static_cast<T*>(other.get())), m_ref_count(other.getRefCountPtr()) {
+            if (m_ptr) {
+                ++*m_ref_count;
+            }
+            else {
+                m_ref_count = nullptr;
+            }
+        }
+
+
         ref_ptr<T> &operator=(const ref_ptr<T> &other)
         {
             if (this != &other)
@@ -100,7 +111,15 @@ namespace puzz
 
         operator bool() const { return m_ptr != nullptr; }
 
-    private:
+        T* get() const {
+            return m_ptr;
+        }
+
+        std::size_t* getRefCountPtr() const {
+            return m_ref_count;
+        }
+
+    protected:
         T *m_ptr;
         std::size_t *m_ref_count;
     };

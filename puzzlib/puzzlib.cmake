@@ -1,23 +1,24 @@
-set(SOURCES
-    puzzlib/src/Core/Application.cpp
-)
+file(GLOB_RECURSE SOURCES "puzzlib/src/*.cpp")
 
-set(HEADERS
-    puzzlib/src/Core/Application.h
-    puzzlib/src/Core/Core.h
-    puzzlib/src/Core/EntryPoint.h
-    puzzlib/src/Core/ref_ptr.h
-    puzzlib/src/Core/Inherit.h
-    puzzlib/src/Core/Object.h
-    puzzlib/src/Containers/Array.h
-    puzzlib/src/State/State.h
-    puzzlib/src/Event/Event.h
-    puzzlib/puzzlib.h
-)
+file(GLOB_RECURSE HEADERS "puzzlib/src/*.h")
 
 add_library(puzzlib SHARED ${SOURCES} ${HEADERS})
 
+find_package(glfw3 CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(OpenGL REQUIRED)
+find_package(spdlog REQUIRED)
+find_package(GLEW REQUIRED)
+find_package(soil CONFIG REQUIRED)
+
 target_link_libraries(puzzlib
+    glfw   
+    spdlog::spdlog
+    spdlog::spdlog_header_only
+    imgui::imgui
+    OpenGL::GL
+    GLEW::GLEW
+    soil
 )
 
 target_include_directories(puzzlib PRIVATE

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Core/ref_ptr.h"
+#include "Core/Visitor.h"
+#include <typeinfo>
 
 namespace puzz
 {
@@ -9,7 +11,21 @@ namespace puzz
     class Inherit : public ParentClass
     {
     public:
-        virtual ref_ptr<ParentClass> Clone() override { return ref_ptr<ParentClass>(new SubClass(*static_cast<SubClass *>(this))); }
+        template<typename... Args>
+        Inherit(Args&&... args) :
+            ParentClass(std::forward<Args>(args)...) {}
+
+        template<typename... Args>
+        static ref_ptr<SubClass> create(Args&&... args)
+        {
+            return ref_ptr<SubClass>(new SubClass(std::forward<Args>(args)...));
+        }
+
+        std::size_t sizeofObject() const noexcept override { return sizeof(SubClass); }
+
+        const std::type_info& type_info() const noexcept override { return typeid(SubClass); }
+
+        void accept(Visitor& visitor) { visitor.apply(static_cast<SubClass&>(*this)); }
     };
 
 }

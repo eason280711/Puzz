@@ -1,15 +1,21 @@
 #pragma once
 
-#include "Core/ref_ptr.h"
-
+#include <typeinfo>
 namespace puzz
 {
 
-    template <class T>
     class Object
     {
     public:
-        virtual ref_ptr<T> Clone() = 0;
+        Object()
+        {
+        };
+        virtual std::size_t sizeofObject() const noexcept {
+            return sizeof(Object);
+        };
+        virtual const std::type_info& type_info() const noexcept {
+            return typeid(Object);
+        };
     };
 
 }

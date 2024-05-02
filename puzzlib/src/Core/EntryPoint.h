@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/ref_ptr.h"
+#include <Windows.h>
 
 extern puzz::ref_ptr<puzz::Application> puzz::CreateApplication();
 
