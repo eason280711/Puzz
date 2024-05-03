@@ -12,7 +12,7 @@
 namespace puzz
 {
 
-    class __declspec(dllexport) Application
+    class Application
     {
     public:
         Application();
@@ -34,7 +34,7 @@ namespace puzz
             m_running = false;
         }
         
-    private:
+    protected:
         ref_ptr<Window> m_window;
         ref_ptr<UI> m_ui;
         ref_ptr<Renderer> m_renderer;

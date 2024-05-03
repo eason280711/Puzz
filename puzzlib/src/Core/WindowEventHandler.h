@@ -30,16 +30,16 @@ namespace puzz
             //up 265, down 264, left 263, right 262
             if (event.GetKey() == 265) {
                 //m_renderer->updateXY(0, 0, 10);
-                m_renderer->getRenderable("tkg")->updateXY(0, 10);   
+                m_renderer->getRenderable("red")->updateXY(0, 10);   
             } else if (event.GetKey() == 264){
                 //m_renderer->updateXY(0, 0, -10);
-                m_renderer->getRenderable("tkg")->updateXY(0, -10);
+                m_renderer->getRenderable("red")->updateXY(0, -10);
             } else if (event.GetKey() == 263) {
                 //m_renderer->updateXY(0,-10, 0);
-                m_renderer->getRenderable("tkg")->updateXY(-10, 0);
+                m_renderer->getRenderable("red")->updateXY(-10, 0);
             } else if (event.GetKey() == 262){
                 //m_renderer->updateXY(0,10, 0);
-                m_renderer->getRenderable("tkg")->updateXY(10, 0);
+                m_renderer->getRenderable("red")->updateXY(10, 0);
             }
         }
     private:

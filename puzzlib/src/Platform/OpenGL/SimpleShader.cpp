@@ -12,6 +12,9 @@
 
 #include <string>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace puzz
 {
     class SimpleShader : public Inherit<Shader, SimpleShader>
@@ -29,6 +32,22 @@ namespace puzz
 
         void use() override {
             glUseProgram(programId);
+        }
+
+        void setMat4(const std::string &name, const glm::mat4 &mat) override {
+            glUniformMatrix4fv(glGetUniformLocation(programId, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+        }
+
+        void setVec3(const std::string &name, const glm::vec3 &vec) override {
+            glUniform3fv(glGetUniformLocation(programId, name.c_str()), 1, &vec[0]);
+        }
+
+        void setVec4(const std::string &name, const glm::vec4 &vec) override {
+            glUniform4fv(glGetUniformLocation(programId, name.c_str()), 1, &vec[0]);
+        }
+
+        void setFloat(const std::string &name, float value) override {
+            glUniform1f(glGetUniformLocation(programId, name.c_str()), value);
         }
 
     private:
