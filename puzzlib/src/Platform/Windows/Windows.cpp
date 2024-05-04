@@ -86,7 +86,7 @@ namespace puzz
             });
         }
 
-        void Tick() override
+        void Tick(double deltaTime) override
         {
             glfwPollEvents();
         }

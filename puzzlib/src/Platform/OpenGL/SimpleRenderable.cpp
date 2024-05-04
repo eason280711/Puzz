@@ -44,10 +44,13 @@ namespace puzz {
             glBindVertexArray(0);
         }
 
-        void updateXY(float x, float y) override {
+        void update(float x, float y) override {
             pos.x += x;
             pos.y -= y;
             updateVertices();
+        }
+
+        void update(glm::vec4 color) override {
         }
 
         void getXY(float& x, float& y) override {

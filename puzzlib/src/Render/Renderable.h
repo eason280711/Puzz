@@ -25,7 +25,10 @@ namespace puzz {
         virtual void unbind() = 0;
         virtual void updateVertices() = 0;
         virtual void updateUVs() = 0;
-        virtual void updateXY(float x, float y) = 0;
+
+        virtual void update(float x, float y) = 0;
+        virtual void update(glm::vec4 color) = 0;
+
         virtual void getXY(float& x, float& y) = 0;
         virtual void onRender() = 0;
 

@@ -6,6 +6,7 @@
 #include "Render/Renderer.h"
 #include "Core/Visitor.h"
 #include "Containers/Array.h"
+#include "Core/Timestamp.h"
 
 #include <iostream>
 
@@ -38,6 +39,8 @@ namespace puzz
         ref_ptr<Window> m_window;
         ref_ptr<UI> m_ui;
         ref_ptr<Renderer> m_renderer;
+        ref_ptr<Timestamp> m_timestamp;
+
         Array<ref_ptr<Visitor>> EventHandlers;
         bool m_running = true;
     };

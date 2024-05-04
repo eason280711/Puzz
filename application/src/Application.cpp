@@ -1,5 +1,6 @@
 #include <puzzlib.h>
 #include <iostream>
+#include <imgui.h>
 
 class myApplication : public puzz::Application
 {
@@ -9,16 +10,92 @@ public:
 
     virtual void Run()
     {
+        m_timestamp = puzz::Timestamp::create();
+        double lag = 0.0;
+        double frameTime = 1.0 / 120.0;
+        double lastLogTime = 0.0;
+        int i = 0, j = 0;
+
+        auto lightgrey = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
+
         while (m_running)
         {
-            m_window->Tick();
+            double currentTime = m_timestamp->getTotalSeconds();
+
             m_renderer->startFrame();
-            m_ui ->startFrame();
-            m_ui ->Tick();
-            m_ui ->render();
-            m_renderer ->render();
-            m_window ->swapBuffers();
+            m_ui->startFrame();
+
+            while (lag >= frameTime)
+            {
+                m_window->Tick(frameTime);
+                m_renderer->Tick(frameTime);
+                m_ui->Tick(frameTime);
+                lag -= frameTime;
+            }
+
+            double lagNormalized = lag / frameTime;
+
+            m_ui->render();
+            m_renderer->render();
+            m_window->swapBuffers();
+
+            double newTime = m_timestamp->getTotalSeconds();
+            double elapsed = newTime - currentTime;
+            currentTime = newTime;
+            lag += elapsed;
+
+            if (currentTime - lastLogTime >= 1.0)
+            {
+                CORE_LOG_TRACE("Current Time: {0}", currentTime);
+                lastLogTime = currentTime;
+
+                std::string name = "black" + std::to_string(i) + std::to_string(j);
+
+                m_renderer->getRenderable(name)->update(lightgrey);
+
+                i++;
+                if (i == 10)
+                {
+                    i = 0;
+                    j++;
+                    if (j == 20)
+                    {
+                        j = 0;
+                    }
+                }
+            }
         }
+    }
+
+    class myGUI : public puzz::Inherit<puzz::UIBuilder, myGUI>
+    {   
+    public:
+        myGUI()
+        {
+        }
+
+        void update() override
+        {
+            float currentTime = ImGui::GetTime();
+            frameCount++;
+            if (currentTime - lastTime >= 1.0f)
+            {
+                fps = (float)frameCount / (currentTime - lastTime);
+                frameCount = 0;
+                lastTime = currentTime;
+            }
+        }
+
+        void render() override
+        {
+            ImGui::Begin("FPS");
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / fps, fps);
+            ImGui::End();
+        }   
+    private:
+        float fps = 0.0f;
+        int frameCount = 0;
+        float lastTime = 0.0f;
     };
 
     virtual void Init()
@@ -30,7 +107,9 @@ public:
         m_window = puzz::Window::create(traits);
         m_window->startUp();
 
-        m_ui = puzz::UI::create(m_window);
+        auto m_gui = myGUI::create();
+
+        m_ui = puzz::UI::create(m_window, m_gui);
         m_renderer = puzz::Renderer::create(m_window);
 
         auto renderable = puzz::Renderable::create(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), glm::vec2(0, 0), glm::vec2(10.0f, 10.0f), 60.0f);

@@ -24,4 +24,6 @@
 #include "src/Render/Renderer.h"
 #include "Core/WindowEventHandler.h"
 
+#include "src/Core/Timestamp.h"
+
 #include "glm/glm.hpp"

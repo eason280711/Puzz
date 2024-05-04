@@ -6,24 +6,38 @@
 
 namespace puzz
 {
-    class UI : public Inherit<RuntimeModule, UI>
+
+    class UIBuilder : public Inherit<Object, UIBuilder>
     {
     public:
-        UI(ref_ptr<Window> window)
-            : m_window(window)
+        UIBuilder()
         {
         }
 
-        virtual void startUp() = 0;
-        virtual void shutDown() = 0;
-        virtual void Tick() = 0;
+        virtual void update() = 0;
+        virtual void render() = 0;
+    private:
+        ref_ptr<Window> m_window;
+    };
+
+    class UI : public Inherit<RuntimeModule, UI>
+    {
+    public:
+        UI(ref_ptr<Window> window, ref_ptr<UIBuilder> builder)
+            : m_window(window)
+            , m_builder(builder)
+        {
+        }
 
         virtual void startFrame() = 0;
         virtual void render() = 0;
 
-        static ref_ptr<UI> create(ref_ptr<Window> window);
+        static ref_ptr<UI> create(ref_ptr<Window> window , ref_ptr<UIBuilder> builder);
 
     private:
+        
+    protected:
+        ref_ptr<UIBuilder> m_builder;
         ref_ptr<Window> m_window;
     };
 }

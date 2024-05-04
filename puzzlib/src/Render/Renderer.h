@@ -16,10 +16,6 @@ namespace puzz
         {
         }
 
-        virtual void startUp() = 0;
-        virtual void shutDown() = 0;
-        virtual void Tick() = 0;
-
         virtual void startFrame() = 0;
         virtual void render() = 0;
 
